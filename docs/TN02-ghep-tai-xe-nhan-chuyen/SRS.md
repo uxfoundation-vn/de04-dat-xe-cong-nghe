@@ -38,7 +38,7 @@
 | BR-16 | **Nhận chuyến**: máy chủ kiểm tra chuyến còn `DANG_TIM_TAI_XE` và yêu cầu còn hạn; đúng → gán tài xế, chuyến `TAI_XE_DANG_DEN`, tài xế `DANG_CHAY`. Sai → MSG-14 cho tài xế |
 | BR-17 | **Thời gian tìm tối đa** 3 phút; hết giờ → chuyến `KHONG_TIM_DUOC`, không thu phí |
 | BR-18 | **Thu nhập dự kiến** trên thẻ = giá chốt × (1 − tỉ lệ chiết khấu); tỉ lệ theo loại xe `[giả định]` |
-| BR-19 | **Tài xế huỷ sau khi nhận** (trước khi đón khách): chuyến quay về `DANG_TIM_TAI_XE`, giữ nguyên giá chốt, đồng hồ 3 phút tính lại từ đầu; tài xế vừa huỷ bị loại khỏi chuyến này. Mỗi chuyến tìm lại tối đa 2 lần; tài xế thứ 3 huỷ → chuyến `KHONG_TIM_DUOC`, không thu phí `[giả định]` |
+| BR-19 | **Tài xế huỷ sau khi nhận** (trước khi đón khách): chuyến quay về `DANG_TIM_TAI_XE`, giữ nguyên giá chốt, đồng hồ 3 phút tính lại từ đầu; tài xế vừa huỷ bị loại khỏi chuyến này. Mỗi chuyến tìm lại tối đa 2 lần; tài xế thứ 3 huỷ → chuyến `KHONG_TIM_DUOC`, không thu phí |
 | BR-20 | **Tắt nhận chuyến** khi đang xem yêu cầu → tính là bỏ qua. Mất kết nối > 30 giây khi rảnh → tạm không được gửi yêu cầu |
 
 ## 4. Trạng thái
@@ -99,6 +99,29 @@ flowchart TD
   G --> H["Hiện Đang chờ chuyến"]
   H -->|Tắt công tắc| I["DriverStatusSet NGOAI_TUYEN, ngừng gửi vị trí"]
 ```
+
+**Luồng chính**
+
+| **Bước** | **Actor** | **Mô tả** |
+| --- | --- | --- |
+| 1 | Tài xế | Ở **SCR-T01**, bật công tắc Nhận chuyến |
+| 2 | Hệ thống | Kiểm tra quyền vị trí "Luôn cho phép" và kết nối máy chủ |
+| 3 | Hệ thống | Gọi \[DriverStatusSet\] `DANG_RANH` |
+| 4 | Hệ thống | Gửi vị trí mỗi 5 giây |
+| 5 | Hệ thống | Hiện "Đang chờ chuyến" |
+
+**Luồng thay thế**
+
+| **Mã** | **Điều kiện** | **Xử lý** |
+| --- | --- | --- |
+| A1 | Tài xế tắt công tắc | \[DriverStatusSet\] `NGOAI_TUYEN`, ngừng gửi vị trí |
+
+**Luồng lỗi**
+
+| **Mã** | **Điều kiện** | **Xử lý** |
+| --- | --- | --- |
+| E1 | Chưa cấp quyền vị trí "Luôn cho phép" | MSG-15 kèm hướng dẫn bật; giữ `NGOAI_TUYEN` |
+| E2 | Không kết nối được máy chủ | MSG-16; giữ `NGOAI_TUYEN` |
 
 ### UC-04 Ghép tài xế
 
@@ -179,6 +202,23 @@ flowchart TD
   F --> G["Chạy lại UC-04, loại tài xế vừa huỷ"]
 ```
 
+**Luồng chính**
+
+| **Bước** | **Actor** | **Mô tả** |
+| --- | --- | --- |
+| 1 | Tài xế | Ở **SCR-T03**, bấm Huỷ chuyến |
+| 2 | Tài xế | Chọn lý do huỷ |
+| 3 | Hệ thống | Gọi \[TripDriverCancel\]; ghi nhận lượt huỷ cho tài xế, tài xế về `DANG_RANH` |
+| 4 | Hệ thống | Chuyến về `DANG_TIM_TAI_XE`, giữ giá chốt (BR-19) |
+| 5 | Hệ thống | Khách nhận MSG-17 |
+| 6 | Hệ thống | Chạy lại UC-04, loại tài xế vừa huỷ |
+
+**Luồng thay thế**
+
+| **Mã** | **Điều kiện** | **Xử lý** |
+| --- | --- | --- |
+| A1 | Đã tìm lại 2 lần mà tài xế thứ 3 vẫn huỷ | Chuyến `KHONG_TIM_DUOC`, không thu phí (BR-19) |
+
 ## 6. Điểm vào
 
 | **Điểm vào** | **Dẫn tới** | **Ghi chú** |
@@ -257,7 +297,7 @@ sequenceDiagram
   end
 ```
 
-**Map lỗi → thông báo** `[giả định]`
+**Map lỗi → thông báo**
 
 | **Nhóm lỗi** | **Message** |
 | --- | --- |
@@ -290,5 +330,6 @@ MSG-17 thuộc SRS TN03. Bản EN: `[chờ bổ sung]`.
 | Realtime | Kết nối realtime giữ khi tài xế bật nhận chuyến; tự kết nối lại; thông báo đẩy làm dự phòng |
 | Pin, dữ liệu | Gửi vị trí 5 giây khi rảnh, giảm tần suất khi đứng yên lâu |
 | Log / audit | Mỗi offer: offer_id, trip_id, driver_id, thời điểm gửi, trả lời, kết quả |
+| Bảo mật | Thẻ yêu cầu không hiện số điện thoại của khách; vị trí tài xế chỉ gửi khi đang bật nhận chuyến hoặc đang có chuyến; khách chỉ thấy vị trí tài xế của chuyến mình |
 | Tracking | Bật, tắt nhận chuyến; offer gửi, nhận, bỏ qua, hết hạn; thời gian ghép; không tìm được; huỷ sau nhận |
 | Accessibility | Nút Nhận ≥ 64 pt chiều cao; âm thanh và rung đủ mạnh; đếm ngược có số, không chỉ vòng màu |

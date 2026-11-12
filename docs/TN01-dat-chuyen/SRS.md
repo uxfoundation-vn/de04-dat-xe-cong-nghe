@@ -273,7 +273,7 @@ sequenceDiagram
   App->>K: SCR-K04
 ```
 
-**Map lỗi → thông báo** `[giả định]`
+**Map lỗi → thông báo**
 
 | **Nhóm lỗi** | **Message** |
 | --- | --- |

@@ -158,13 +158,30 @@ flowchart TD
   G --> I["Link chia sẻ hành trình hết hạn"]
 ```
 
+**Luồng chính**
+
+| **Bước** | **Actor** | **Mô tả** |
+| --- | --- | --- |
+| 1 | Hệ thống | Chuyến `DANG_DI`: hai app hiện lộ trình và giờ tới nơi |
+| 2 | Tài xế | Tới nơi, bấm Kết thúc chuyến |
+| 3 | Hệ thống | Cách điểm đến ≤ 500 m → gọi \[TripEnd\], gửi lộ trình thực tế |
+| 4 | Hệ thống | Chuyến `CHO_THANH_TOAN`; khách sang **SCR-K06**, tài xế sang **SCR-T05** (SRS TN04) |
+| 5 | Hệ thống | Link chia sẻ hành trình hết hạn |
+
 **Luồng thay thế**
 
 | **Mã** | **Điều kiện** | **Xử lý** |
 | --- | --- | --- |
 | A1 | Chuyến phải dừng giữa đường: xe hỏng, sự cố, khách yêu cầu xuống sớm | Tài xế bấm Kết thúc chuyến; cách điểm đến > 500 m nên hiện MSG-22, tài xế chọn lý do rồi xác nhận. Chuyến sang `CHO_THANH_TOAN`, không qua `DA_HUY` |
-| A2 | Dừng giữa đường do phía tài xế (xe hỏng, sự cố) | Giá tính theo km, phút thực tế và không vượt giá chốt; lý do lưu vào chuyến để tổng đài đối soát `[giả định]` |
-| A3 | Khách yêu cầu xuống sớm | Giữ giá chốt theo BR-33 `[giả định]` |
+| A2 | Dừng giữa đường do phía tài xế (xe hỏng, sự cố) | Giá tính theo km, phút thực tế và không vượt giá chốt; lý do lưu vào chuyến để tổng đài đối soát |
+| A3 | Khách yêu cầu xuống sớm | Giữ giá chốt theo BR-33 |
+
+**Luồng lỗi**
+
+| **Mã** | **Điều kiện** | **Xử lý** |
+| --- | --- | --- |
+| E1 | Tài xế bấm Huỷ ở MSG-22 | Quay lại màn đang đi, chuyến giữ `DANG_DI` |
+| E2 | Mất mạng khi bấm Kết thúc | Báo "Đang chờ kết nối", lệnh xếp hàng và gửi khi có mạng; vị trí vẫn ghi trên máy |
 
 ### UC-08 Liên lạc giữa khách và tài xế
 
@@ -195,6 +212,27 @@ sequenceDiagram
   end
 ```
 
+**Luồng chính**
+
+| **Bước** | **Actor** | **Mô tả** |
+| --- | --- | --- |
+| 1 | Khách hoặc tài xế | Bấm Gọi ở màn chuyến |
+| 2 | Hệ thống | Gọi \[CallSessionGet\] lấy số trung gian |
+| 3 | Hệ thống | App gọi số trung gian; bên kia nhận cuộc gọi, chỉ thấy số trung gian |
+
+**Luồng thay thế**
+
+| **Mã** | **Điều kiện** | **Xử lý** |
+| --- | --- | --- |
+| A1 | Chọn Nhắn tin | Gõ tin hoặc chọn tin mẫu → \[MessageSend\] → bên kia nhận thông báo; app tài xế đọc to khi đang lái |
+| A2 | Quá 30 phút sau khi chuyến kết thúc | Ẩn nút Gọi, Nhắn tin |
+
+**Luồng lỗi**
+
+| **Mã** | **Điều kiện** | **Xử lý** |
+| --- | --- | --- |
+| E1 | Không lấy được số trung gian hoặc gửi tin thất bại | Báo lỗi, cho thử lại; không hiện số thật của bên kia |
+
 ### UC-09 Chia sẻ hành trình và SOS
 
 | **Mục** | **Nội dung** |
@@ -218,6 +256,31 @@ flowchart TD
   C -->|Báo đội an toàn| M["SafetyTicketCreate ưu tiên cao, MSG-25"]
   N["Chuyến kết thúc hoặc huỷ"] --> O["Link hết hạn, trang hiện MSG-26"]
 ```
+
+**Luồng chính**
+
+| **Bước** | **Actor** | **Mô tả** |
+| --- | --- | --- |
+| 1 | Khách | Chạm nút an toàn ở **SCR-K05** |
+| 2 | Hệ thống | Mở bảng an toàn |
+| 3 | Khách | Chọn Chia sẻ hành trình |
+| 4 | Hệ thống | Gọi \[TripShareCreate\] tạo link có token, mở bảng chia sẻ của hệ điều hành |
+| 5 | Người thân | Mở link: thấy xe, vị trí, giờ tới nơi |
+| 6 | Hệ thống | Chuyến kết thúc hoặc huỷ → link hết hạn, trang hiện MSG-26 |
+
+**Luồng thay thế**
+
+| **Mã** | **Điều kiện** | **Xử lý** |
+| --- | --- | --- |
+| A1 | Chọn Gọi 113 | Giữ nút 2 giây → đếm ngược 3 giây có nút huỷ → gọi 113, đồng thời báo đội an toàn |
+| A2 | Chọn Gửi vị trí cho liên hệ khẩn cấp | Chưa có liên hệ → thêm ngay; có → \[SmsSosSend\] kèm link, MSG-24 |
+| A3 | Chọn Báo đội an toàn | \[SafetyTicketCreate\] ưu tiên cao, MSG-25 |
+
+**Luồng lỗi**
+
+| **Mã** | **Điều kiện** | **Xử lý** |
+| --- | --- | --- |
+| E1 | Gửi SMS khẩn cấp thất bại | Báo lỗi, cho thử lại; nút Gọi 113 vẫn dùng được |
 
 ## 6. Điểm vào
 
@@ -314,7 +377,7 @@ sequenceDiagram
   S->>KA: TripEvent CHO_THANH_TOAN
 ```
 
-**Map lỗi → thông báo** `[giả định]`
+**Map lỗi → thông báo**
 
 | **Nhóm lỗi** | **Message** |
 | --- | --- |

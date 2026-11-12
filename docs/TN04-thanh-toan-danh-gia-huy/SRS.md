@@ -126,7 +126,7 @@ flowchart TD
 | --- | --- | --- |
 | E1 | Tài xế bấm "Đã thu" khi mất mạng | Xếp hàng gửi lại; app tài xế hiện "Đang chờ kết nối" |
 | E2 | Sau 30 phút chưa `HOAN_THANH` | Tạo ticket cho tổng đài |
-| E3 | Khách không trả hoặc trả thiếu tiền mặt | Tài xế chọn "Khách chưa trả đủ" ở **SCR-T05**, nhập số đã thu; chuyến `HOAN_THANH`, phần thiếu ghi nợ cho khách như BR-38, tạo ticket cho tổng đài `[giả định]` |
+| E3 | Khách không trả hoặc trả thiếu tiền mặt | Tài xế chọn "Khách chưa trả đủ" ở **SCR-T05**, nhập số đã thu; chuyến `HOAN_THANH`, phần thiếu ghi nợ cho khách như BR-38, tạo ticket cho tổng đài |
 
 ### UC-11 Huỷ chuyến
 
@@ -203,6 +203,31 @@ flowchart TD
   B -->|Bỏ qua| O["Đánh giá sau trong 24 giờ từ lịch sử"]
 ```
 
+**Luồng chính**
+
+| **Bước** | **Actor** | **Mô tả** |
+| --- | --- | --- |
+| 1 | Hệ thống | Chuyến `HOAN_THANH`: khách thấy **SCR-K07**, tài xế thấy phần đánh giá ở **SCR-T05** |
+| 2 | Khách hoặc tài xế | Chọn số sao |
+| 3 | Khách hoặc tài xế | Thêm nhận xét (tuỳ chọn), bấm Gửi |
+| 4 | Hệ thống | Gọi \[RatingSubmit\]; cập nhật điểm trung bình |
+| 5 | Hệ thống | Cảm ơn, về trang chủ |
+
+**Luồng thay thế**
+
+| **Mã** | **Điều kiện** | **Xử lý** |
+| --- | --- | --- |
+| A1 | ≤ 3 sao | Bắt buộc chọn ít nhất 1 lý do; lý do về an toàn → tạo ticket cho đội an toàn (BR-41) |
+| A2 | Khách chấm 5 sao và dùng ví | Gợi ý tip (BR-39); có tip → trừ ví, tài xế nhận MSG-34 |
+| A3 | Bỏ qua | Đánh giá lại được trong 24 giờ từ lịch sử chuyến |
+
+**Luồng lỗi**
+
+| **Mã** | **Điều kiện** | **Xử lý** |
+| --- | --- | --- |
+| E1 | Gửi đánh giá thất bại | Giữ nội dung đã chọn, cho thử lại |
+| E2 | Trừ ví tip thất bại | Đánh giá vẫn được lưu; báo tip chưa thực hiện được |
+
 ### UC-13 Lịch sử chuyến và báo cáo sự cố
 
 | **Mục** | **Nội dung** |
@@ -222,6 +247,31 @@ flowchart TD
   H --> I["MSG-35 kèm mã yêu cầu"]
   D -->|Quá 7 ngày| J["Nút Báo sự cố ẩn, hiện hotline"]
 ```
+
+**Luồng chính**
+
+| **Bước** | **Actor** | **Mô tả** |
+| --- | --- | --- |
+| 1 | Khách | Hồ sơ → Lịch sử chuyến |
+| 2 | Hệ thống | **SCR-K08**: danh sách chuyến 12 tháng, mới nhất trước |
+| 3 | Khách | Chạm một chuyến |
+| 4 | Hệ thống | Hiện chi tiết và hoá đơn |
+| 5 | Khách | Chọn Báo sự cố (trong 7 ngày): chọn loại, mô tả, ảnh |
+| 6 | Hệ thống | Gọi \[IssueCreate\]; MSG-35 kèm mã yêu cầu |
+
+**Luồng thay thế**
+
+| **Mã** | **Điều kiện** | **Xử lý** |
+| --- | --- | --- |
+| A1 | Chọn Đặt lại | Mở màn chọn loại xe với cùng điểm đón, điểm đến (SRS TN01) |
+| A2 | Chọn Đánh giá trong 24 giờ | UC-12 |
+| A3 | Chuyến quá 7 ngày | Ẩn nút Báo sự cố, hiện hotline |
+
+**Luồng lỗi**
+
+| **Mã** | **Điều kiện** | **Xử lý** |
+| --- | --- | --- |
+| E1 | Gửi báo cáo thất bại | Giữ nội dung đã nhập, cho thử lại |
 
 ## 6. Điểm vào
 
@@ -327,7 +377,7 @@ sequenceDiagram
   S->>TA: HOAN_THANH
 ```
 
-**Map lỗi → thông báo** `[giả định]`
+**Map lỗi → thông báo**
 
 | **Nhóm lỗi** | **Message** |
 | --- | --- |
