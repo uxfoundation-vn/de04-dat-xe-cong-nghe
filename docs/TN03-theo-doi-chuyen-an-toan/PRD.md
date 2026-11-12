@@ -129,6 +129,8 @@ AC04: Mất kết nối vị trí tài xế > 30 giây → hiện "Đang cập n
 
 #### US1.2 Liên hệ với nhau
 
+User Story: Là khách hoặc tài xế, tôi muốn gọi, nhắn tin cho bên kia mà không lộ số điện thoại để liên lạc an toàn.
+
 AC01: Nút Gọi và Nhắn tin ở cả hai app; gọi qua số trung gian.
 
 AC02: Tin nhắn mẫu nhanh: "Tôi đang ra", "Tôi đứng ở cổng", "Anh/chị ở đâu ạ?".
@@ -139,6 +141,8 @@ AC03: Tin nhắn mới có thông báo, kể cả khi app ở nền.
 
 #### US2.1 Tài xế báo đã đến
 
+User Story: Là tài xế, tôi muốn báo đã đến điểm đón để khách ra đúng lúc và trạng thái chuyến đúng thực tế.
+
 AC01: Nút "Đã đến" chỉ bật khi tài xế cách điểm đón ≤ 100 m.
 
 AC02: Khách nhận thông báo "Tài xế đã đến" kèm biển số.
@@ -146,6 +150,8 @@ AC02: Khách nhận thông báo "Tài xế đã đến" kèm biển số.
 AC03: Hai phía cùng thấy đồng hồ thời gian chờ miễn phí; hết giờ thì báo cho khách là bắt đầu tính phí chờ.
 
 #### US2.2 Bắt đầu chuyến an toàn
+
+User Story: Là khách đi đêm, tôi muốn tài xế phải nhập mã xác nhận trước khi bắt đầu chuyến để không lên nhầm xe.
 
 AC01: Chuyến 22:00–05:00 hiện mã xác nhận 4 số cho khách; tài xế nhập đúng mã mới bắt đầu được.
 
@@ -162,6 +168,8 @@ AC01: Nút "Chia sẻ hành trình" tạo link xem trên trình duyệt: biển 
 AC02: Link hết hạn khi chuyến kết thúc hoặc bị huỷ.
 
 #### US3.2 SOS
+
+User Story: Là khách, tôi muốn gọi trợ giúp khẩn cấp nhanh để an toàn khi có sự cố.
 
 AC01: Nút an toàn ở góc màn, mở bảng gồm: Gọi 113, Gửi vị trí cho liên hệ khẩn cấp, Báo đội an toàn.
 

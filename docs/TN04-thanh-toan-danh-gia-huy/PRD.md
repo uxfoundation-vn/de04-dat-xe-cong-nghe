@@ -122,6 +122,8 @@ flowchart LR
 
 #### US1.1 Chọn phương thức trước khi đặt
 
+User Story: Là khách, tôi muốn chọn phương thức thanh toán trước khi đặt để không lúng túng lúc kết thúc chuyến.
+
 AC01: Mặc định là phương thức đã dùng ở chuyến trước; đổi được ở màn chọn loại xe.
 
 AC02: Ví liên kết hiện số dư; không đủ số dư cho giá ước tính → gợi ý tiền mặt.
@@ -141,6 +143,8 @@ AC04: Ví lỗi → báo cả hai phía, chuyển tiền mặt, tài xế thu ti
 AC05: Tiền mặt → tài xế bấm "Đã thu tiền"; khách thấy "Đã thanh toán".
 
 #### US1.3 Hoá đơn và lịch sử
+
+User Story: Là khách, tôi muốn xem lịch sử chuyến và hoá đơn để đối chiếu, khiếu nại khi có vấn đề.
 
 AC01: Lịch sử chuyến liệt kê chuyến hoàn thành và đã huỷ, mới nhất trước.
 
@@ -166,6 +170,8 @@ AC04: Không huỷ được khi đã bắt đầu chuyến.
 
 #### US2.2 Tài xế huỷ vì khách không đến
 
+User Story: Là tài xế, tôi muốn huỷ chuyến khi khách không đến và được bù để không mất công chờ.
+
 AC01: Sau 10 phút chờ, tài xế có nút "Khách không đến"; khách bị tính phí huỷ và được báo.
 
 AC02: Tài xế huỷ vì lý do khác trước khi đón (TN02) → khách không bị phí.
@@ -173,6 +179,8 @@ AC02: Tài xế huỷ vì lý do khác trước khi đón (TN02) → khách khô
 ### UC3. Đánh giá
 
 #### US3.1 Khách đánh giá tài xế
+
+User Story: Là khách, tôi muốn đánh giá tài xế sau chuyến để góp phần giữ chất lượng dịch vụ.
 
 AC01: Màn đánh giá hiện sau thanh toán; bỏ qua được và đánh giá lại trong 24 giờ từ lịch sử.
 
@@ -183,6 +191,8 @@ AC03: 5 sao hiện lời khen gợi ý và tip (khi dùng ví).
 AC04: Đánh giá thấp liên quan an toàn tạo yêu cầu cho đội an toàn.
 
 #### US3.2 Tài xế đánh giá khách
+
+User Story: Là tài xế, tôi muốn đánh giá khách sau chuyến để cộng đồng đi lại tốt hơn.
 
 AC01: Tài xế đánh giá khách sau khi thu tiền; lý do khi ≤ 3 sao.
 

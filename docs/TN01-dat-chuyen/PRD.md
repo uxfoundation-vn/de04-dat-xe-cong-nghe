@@ -130,6 +130,8 @@ AC05: Điểm đón ngoài vùng phục vụ → báo rõ, không cho tiếp t�
 
 #### US1.2 Chọn điểm đến
 
+User Story: Là khách, tôi muốn chọn điểm đến nhanh từ địa điểm đã lưu hoặc gần đây để đặt xe trong vài giây.
+
 AC01: Ô tìm kiếm gợi ý địa chỉ khi gõ, chấp nhận gõ không dấu.
 
 AC02: Hiện Nhà, Công ty (nếu đã lưu) và 5 điểm đến gần đây ngay khi mở ô tìm.
@@ -152,11 +154,15 @@ AC03: Lộ trình hiện trên bản đồ, kèm quãng đường và thời gia
 
 #### US2.2 Biết về cao điểm
 
+User Story: Là khách, tôi muốn được báo rõ khi giá đang cao điểm để không bất ngờ về giá.
+
 AC01: Hệ số > 1,0 → nhãn "Cao điểm ×{hệ số}" cạnh giá và giải thích khi chạm.
 
 AC02: Lần đầu gặp cao điểm trong phiên → khách phải bấm đồng ý trước khi đặt.
 
 #### US2.3 Xác nhận đặt chuyến
+
+User Story: Là khách, tôi muốn xem lại phương thức thanh toán và ghi chú cho tài xế trước khi đặt để tài xế đón đúng chỗ.
 
 AC01: Hiện phương thức thanh toán đang chọn, đổi được trước khi đặt.
 

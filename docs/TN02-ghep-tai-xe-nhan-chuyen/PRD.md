@@ -155,11 +155,15 @@ AC03: Có nút Huỷ chuyến; huỷ lúc đang tìm không mất phí (TN04).
 
 #### US3.2 Nhận thông tin tài xế
 
+User Story: Là khách, tôi muốn thấy ngay tài xế nào sẽ đến để nhận ra xe khi tới.
+
 AC01: Ghép xong → hiện ảnh, tên, đánh giá, hãng và màu xe, biển số (to, dễ đọc), thời gian đến.
 
 AC02: Thông báo đẩy khi app ở nền.
 
 #### US3.3 Không tìm được tài xế
+
+User Story: Là khách, tôi muốn được gợi ý khi không tìm được tài xế để vẫn có cách đi.
 
 AC01: Sau 3 phút không ghép được → báo rõ, chuyến kết thúc, không mất phí.
 
