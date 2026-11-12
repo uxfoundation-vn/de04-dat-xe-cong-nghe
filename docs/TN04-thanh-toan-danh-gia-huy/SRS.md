@@ -126,6 +126,7 @@ flowchart TD
 | --- | --- | --- |
 | E1 | Tài xế bấm "Đã thu" khi mất mạng | Xếp hàng gửi lại; app tài xế hiện "Đang chờ kết nối" |
 | E2 | Sau 30 phút chưa `HOAN_THANH` | Tạo ticket cho tổng đài |
+| E3 | Khách không trả hoặc trả thiếu tiền mặt | Tài xế chọn "Khách chưa trả đủ" ở **SCR-T05**, nhập số đã thu; chuyến `HOAN_THANH`, phần thiếu ghi nợ cho khách như BR-38, tạo ticket cho tổng đài `[giả định]` |
 
 ### UC-11 Huỷ chuyến
 

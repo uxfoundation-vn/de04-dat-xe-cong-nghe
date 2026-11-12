@@ -38,7 +38,7 @@
 | BR-16 | **Nhận chuyến**: máy chủ kiểm tra chuyến còn `DANG_TIM_TAI_XE` và yêu cầu còn hạn; đúng → gán tài xế, chuyến `TAI_XE_DANG_DEN`, tài xế `DANG_CHAY`. Sai → MSG-14 cho tài xế |
 | BR-17 | **Thời gian tìm tối đa** 3 phút; hết giờ → chuyến `KHONG_TIM_DUOC`, không thu phí |
 | BR-18 | **Thu nhập dự kiến** trên thẻ = giá chốt × (1 − tỉ lệ chiết khấu); tỉ lệ theo loại xe `[giả định]` |
-| BR-19 | **Tài xế huỷ sau khi nhận** (trước khi đón khách): chuyến quay về `DANG_TIM_TAI_XE`, giữ nguyên giá chốt, đồng hồ 3 phút tính lại từ đầu; tài xế vừa huỷ bị loại khỏi chuyến này |
+| BR-19 | **Tài xế huỷ sau khi nhận** (trước khi đón khách): chuyến quay về `DANG_TIM_TAI_XE`, giữ nguyên giá chốt, đồng hồ 3 phút tính lại từ đầu; tài xế vừa huỷ bị loại khỏi chuyến này. Mỗi chuyến tìm lại tối đa 2 lần; tài xế thứ 3 huỷ → chuyến `KHONG_TIM_DUOC`, không thu phí `[giả định]` |
 | BR-20 | **Tắt nhận chuyến** khi đang xem yêu cầu → tính là bỏ qua. Mất kết nối > 30 giây khi rảnh → tạm không được gửi yêu cầu |
 
 ## 4. Trạng thái
@@ -57,6 +57,7 @@ stateDiagram-v2
   DANG_CHAY --> DANG_RANH : Chuyến kết thúc hoặc huỷ
   DANG_RANH --> MAT_KET_NOI : Không gửi vị trí 30 giây
   MAT_KET_NOI --> DANG_RANH : Có kết nối lại
+  MAT_KET_NOI --> NGOAI_TUYEN : Mất kết nối quá 5 phút
 ```
 
 ### 4.2 Trạng thái một yêu cầu gửi tài xế

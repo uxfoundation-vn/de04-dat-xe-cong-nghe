@@ -54,7 +54,8 @@ stateDiagram-v2
   TAI_XE_DA_DEN --> DANG_DI : Bắt đầu chuyến
   DANG_CHO_KHACH --> DANG_DI : Bắt đầu chuyến
   DANG_DI --> CHO_THANH_TOAN : Kết thúc chuyến
-  TAI_XE_DANG_DEN --> DA_HUY : Huỷ, TN04
+  TAI_XE_DANG_DEN --> [*] : Tài xế huỷ, chuyến về DANG_TIM_TAI_XE, TN02
+  TAI_XE_DANG_DEN --> DA_HUY : Khách huỷ, TN04
   TAI_XE_DA_DEN --> DA_HUY : Huỷ, TN04
   DANG_CHO_KHACH --> DA_HUY : Huỷ, TN04
   CHO_THANH_TOAN --> [*]
@@ -156,6 +157,14 @@ flowchart TD
   G --> H["Khách: SCR-K06, tài xế: SCR-T05, TN04"]
   G --> I["Link chia sẻ hành trình hết hạn"]
 ```
+
+**Luồng thay thế**
+
+| **Mã** | **Điều kiện** | **Xử lý** |
+| --- | --- | --- |
+| A1 | Chuyến phải dừng giữa đường: xe hỏng, sự cố, khách yêu cầu xuống sớm | Tài xế bấm Kết thúc chuyến; cách điểm đến > 500 m nên hiện MSG-22, tài xế chọn lý do rồi xác nhận. Chuyến sang `CHO_THANH_TOAN`, không qua `DA_HUY` |
+| A2 | Dừng giữa đường do phía tài xế (xe hỏng, sự cố) | Giá tính theo km, phút thực tế và không vượt giá chốt; lý do lưu vào chuyến để tổng đài đối soát `[giả định]` |
+| A3 | Khách yêu cầu xuống sớm | Giữ giá chốt theo BR-33 `[giả định]` |
 
 ### UC-08 Liên lạc giữa khách và tài xế
 
