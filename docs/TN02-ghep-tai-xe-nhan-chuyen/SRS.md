@@ -257,6 +257,16 @@ sequenceDiagram
   end
 ```
 
+**Map lỗi → thông báo** `[giả định]`
+
+| **Nhóm lỗi** | **Message** |
+| --- | --- |
+| Yêu cầu hết hạn trước khi tài xế trả lời | MSG-13 |
+| Chuyến không còn (khách huỷ, tài xế khác đã nhận) | MSG-14 |
+| Chưa cấp quyền vị trí "Luôn cho phép" | MSG-15 |
+| Mất kết nối | MSG-16 |
+| Hết thời gian tìm tài xế | MSG-11 |
+
 ## 9. Danh sách thông báo
 
 | **ID** | **Nơi hiện** | **Nội dung (VI)** |

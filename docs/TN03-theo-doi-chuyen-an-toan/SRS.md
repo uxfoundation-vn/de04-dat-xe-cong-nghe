@@ -314,6 +314,17 @@ sequenceDiagram
   S->>KA: TripEvent CHO_THANH_TOAN
 ```
 
+**Map lỗi → thông báo** `[giả định]`
+
+| **Nhóm lỗi** | **Message** |
+| --- | --- |
+| Vị trí tài xế không cập nhật | MSG-18 |
+| Mã xác nhận sai | MSG-21 |
+| Kết thúc chuyến khi còn xa điểm đến | MSG-22 |
+| Link chia sẻ hành trình hết hiệu lực | MSG-26 |
+| Mất mạng khi đổi trạng thái chuyến | Báo "Đang chờ kết nối", xếp hàng gửi lại (UC-06, E2) |
+| Gửi SMS khẩn cấp thất bại | Thông báo lỗi chung của app (ngoài bộ MSG của SRS này), cho thử lại; vẫn cho gọi 113 |
+
 ## 9. Danh sách thông báo
 
 | **ID** | **Nơi hiện** | **Nội dung (VI)** |

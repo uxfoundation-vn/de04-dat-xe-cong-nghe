@@ -327,6 +327,17 @@ sequenceDiagram
   S->>TA: HOAN_THANH
 ```
 
+**Map lỗi → thông báo** `[giả định]`
+
+| **Nhóm lỗi** | **Message** |
+| --- | --- |
+| Ví không đủ số dư | MSG-27 |
+| Trừ ví thất bại hoặc không phản hồi | MSG-29 |
+| Huỷ khi chuyến đã bắt đầu | MSG-38 |
+| Phí huỷ thay đổi giữa lúc báo và lúc xác nhận | Hiện lại MSG-30 với phí mới |
+| Còn nợ phí huỷ khi đặt chuyến mới | MSG-36 |
+| Mất mạng, lỗi máy chủ khác | Thông báo lỗi chung của app (ngoài bộ MSG của SRS này), cho thử lại |
+
 ## 9. Danh sách thông báo
 
 | **ID** | **Nơi hiện** | **Nội dung (VI)** |

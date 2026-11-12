@@ -273,6 +273,19 @@ sequenceDiagram
   App->>K: SCR-K04
 ```
 
+**Map lỗi → thông báo** `[giả định]`
+
+| **Nhóm lỗi** | **Message** |
+| --- | --- |
+| Không có quyền vị trí | MSG-01 |
+| Vị trí kém chính xác | MSG-02 |
+| Điểm đón hoặc điểm đến ngoài khu vực phục vụ | MSG-03 |
+| Khoảng cách không hợp lệ | MSG-06 |
+| Giá đã thay đổi khi tạo chuyến | MSG-05 |
+| Đang có chuyến chưa kết thúc | MSG-07 |
+| Không có xe gần | MSG-09 |
+| Mất mạng, quá thời gian, lỗi máy chủ | MSG-08 |
+
 ## 9. Danh sách thông báo
 
 | **ID** | **Nơi hiện** | **Nội dung (VI)** |
