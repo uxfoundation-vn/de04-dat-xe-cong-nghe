@@ -218,7 +218,7 @@ flowchart TD
 | **Mã** | **Điều kiện** | **Xử lý** |
 | --- | --- | --- |
 | A1 | ≤ 3 sao | Bắt buộc chọn ít nhất 1 lý do; lý do về an toàn → tạo ticket cho đội an toàn (BR-41) |
-| A2 | Khách chấm 5 sao và dùng ví | Gợi ý tip (BR-39); có tip → trừ ví, tài xế nhận MSG-34 |
+| A2 | Khách chấm trên 3 sao và dùng ví | Gợi ý tip (BR-39); có tip → trừ ví, tài xế nhận MSG-34 |
 | A3 | Bỏ qua | Đánh giá lại được trong 24 giờ từ lịch sử chuyến |
 
 **Luồng lỗi**
