@@ -1,8 +1,6 @@
-> **Mã:** DE04-TN03-PRD · **Trạng thái:** nháp · **Người viết:** Design (mock) · **SRS:** [SRS.md](SRS.md)
+> **Mã:** DE04-TN03-PRD · **Trạng thái:** đã chốt · **Người viết:** Design · **SRS:** [SRS.md](SRS.md)
 
 # PRD Theo dõi chuyến và an toàn (App đặt xe công nghệ)
-
-> **Bản mock.** Con số đánh dấu `[giả định]` dùng để dựng flow, cần PO xác nhận trước khi dùng.
 
 ## 1. Bối cảnh và vấn đề
 
@@ -23,7 +21,7 @@ Từ lúc tài xế nhận chuyến ([TN02](../TN02-ghep-tai-xe-nhan-chuyen/PRD.
 
 ### 1.3 Mục tiêu
 
-- ≥ 95% chuyến khách thấy vị trí tài xế cập nhật đều, không trễ quá 10 giây `[giả định]`.
+- ≥ 95% chuyến khách thấy vị trí tài xế cập nhật đều, không trễ quá 10 giây.
 - Tỉ lệ lên nhầm xe ≈ 0.
 - Mọi lời gọi giữa khách và tài xế đi qua số trung gian.
 
@@ -46,7 +44,7 @@ Từ lúc tài xế nhận chuyến ([TN02](../TN02-ghep-tai-xe-nhan-chuyen/PRD.
 - Thời gian chờ miễn phí khi tài xế đã đến.
 - Chia sẻ hành trình qua đường link cho người thân.
 - Nút SOS: gọi số khẩn cấp, gửi vị trí cho liên hệ khẩn cấp và đội an toàn.
-- Mã xác nhận chuyến cho chuyến đi đêm `[giả định]`.
+- Mã xác nhận chuyến cho chuyến đi đêm.
 
 ### 3.2 Ngoài phạm vi
 
@@ -75,7 +73,7 @@ Không bên nào thấy số điện thoại thật của bên kia. Link chia s�
 
 ## 5. Quy tắc nghiệp vụ
 
-| **Quy tắc** | **Giá trị** `[giả định]` |
+| **Quy tắc** | **Giá trị** |
 | --- | --- |
 | Tần suất vị trí tài xế | 5 giây khi có chuyến |
 | Bấm "Đã đến" | Chỉ khi tài xế cách điểm đón ≤ 100 m |
@@ -185,7 +183,7 @@ AC01: Tài xế bấm "Kết thúc chuyến" tại điểm đến hoặc nơi kh
 
 AC02: Hai phía chuyển sang màn thanh toán (TN04).
 
-## 8. Chỉ số theo dõi `[giả định]`
+## 8. Chỉ số theo dõi
 
 | **Chỉ số** | **Định nghĩa** | **Mục tiêu MVP** |
 | --- | --- | --- |

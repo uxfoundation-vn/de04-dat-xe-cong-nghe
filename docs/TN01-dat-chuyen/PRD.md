@@ -1,8 +1,6 @@
-> **Mã:** DE04-TN01-PRD · **Trạng thái:** nháp · **Người viết:** Design (mock) · **SRS:** [SRS.md](SRS.md)
+> **Mã:** DE04-TN01-PRD · **Trạng thái:** đã chốt · **Người viết:** Design · **SRS:** [SRS.md](SRS.md)
 
 # PRD Đặt chuyến (App đặt xe công nghệ)
-
-> **Bản mock.** Con số đánh dấu `[giả định]` dùng để dựng flow, cần PO xác nhận trước khi dùng.
 
 ## 1. Bối cảnh và vấn đề
 
@@ -22,9 +20,9 @@
 
 ### 1.3 Mục tiêu
 
-- Từ mở app tới xác nhận đặt ≤ 30 giây với địa chỉ quen `[giả định]`.
-- Tỉ lệ chuyến bị gọi điện vì sai điểm đón ≤ 10% `[giả định]`.
-- Chênh lệch giữa giá ước tính và giá cuối ≤ 10% ở ≥ 90% chuyến `[giả định]`.
+- Từ mở app tới xác nhận đặt ≤ 30 giây với địa chỉ quen.
+- Tỉ lệ chuyến bị gọi điện vì sai điểm đón ≤ 10%.
+- Chênh lệch giữa giá ước tính và giá cuối ≤ 10% ở ≥ 90% chuyến.
 
 ## 2. Người dùng
 
@@ -72,7 +70,7 @@ Giá cao điểm được ghi rõ, kèm hệ số, trước khi khách bấm đ�
 
 ## 5. Quy tắc nghiệp vụ
 
-| **Quy tắc** | **Giá trị** `[giả định]` |
+| **Quy tắc** | **Giá trị** |
 | --- | --- |
 | Loại xe | Xe máy, Ô tô 4 chỗ, Ô tô 7 chỗ |
 | Công thức giá | Giá mở cửa + giá mỗi km × km + giá mỗi phút × phút, nhân hệ số cao điểm, làm tròn 1.000 ₫ |
@@ -178,7 +176,7 @@ AC01: Lưu Nhà, Công ty và tối đa 10 địa điểm khác từ ô tìm ki�
 
 AC02: Sửa, xoá địa điểm đã lưu trong Hồ sơ.
 
-## 8. Chỉ số theo dõi `[giả định]`
+## 8. Chỉ số theo dõi
 
 | **Chỉ số** | **Định nghĩa** | **Mục tiêu MVP** |
 | --- | --- | --- |

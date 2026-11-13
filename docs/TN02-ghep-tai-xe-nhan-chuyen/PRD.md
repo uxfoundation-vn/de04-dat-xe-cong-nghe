@@ -1,8 +1,6 @@
-> **Mã:** DE04-TN02-PRD · **Trạng thái:** nháp · **Người viết:** Design (mock) · **SRS:** [SRS.md](SRS.md)
+> **Mã:** DE04-TN02-PRD · **Trạng thái:** đã chốt · **Người viết:** Design · **SRS:** [SRS.md](SRS.md)
 
 # PRD Ghép tài xế và nhận chuyến (App đặt xe công nghệ)
-
-> **Bản mock.** Con số đánh dấu `[giả định]` dùng để dựng flow, cần PO xác nhận trước khi dùng.
 
 ## 1. Bối cảnh và vấn đề
 
@@ -22,9 +20,9 @@ Sau khi khách đặt ([TN01](../TN01-dat-chuyen/PRD.md)), hệ thống phải t
 
 ### 1.3 Mục tiêu
 
-- ≥ 85% chuyến tìm được tài xế trong 2 phút `[giả định]`.
-- Thời gian ghép trung vị ≤ 30 giây `[giả định]`.
-- Tỉ lệ tài xế huỷ sau khi nhận ≤ 5% `[giả định]`.
+- ≥ 85% chuyến tìm được tài xế trong 2 phút.
+- Thời gian ghép trung vị ≤ 30 giây.
+- Tỉ lệ tài xế huỷ sau khi nhận ≤ 5%.
 
 ## 2. Người dùng
 
@@ -71,7 +69,7 @@ Yêu cầu có âm thanh rõ, nút nhận to, và bỏ qua tự động khi hế
 
 ## 5. Quy tắc nghiệp vụ
 
-| **Quy tắc** | **Giá trị** `[giả định]` |
+| **Quy tắc** | **Giá trị** |
 | --- | --- |
 | Bán kính tìm | Bắt đầu 2 km, mở rộng 1 km mỗi 30 giây, tối đa 5 km |
 | Chọn tài xế | Đang rảnh, đúng loại xe, gần nhất theo thời gian đi tới điểm đón |
@@ -173,7 +171,7 @@ AC02: Gợi ý loại xe khác đang có tài xế gần, kèm giá; hoặc "Th�
 
 AC01: Tài xế huỷ → khách được báo và hệ thống tự tìm tài xế khác, khách không phải đặt lại.
 
-## 8. Chỉ số theo dõi `[giả định]`
+## 8. Chỉ số theo dõi
 
 | **Chỉ số** | **Định nghĩa** | **Mục tiêu MVP** |
 | --- | --- | --- |

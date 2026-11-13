@@ -1,8 +1,8 @@
-> **Mã:** DE04-TN03-SRS · **Trạng thái:** nháp · **Người viết:** Design (mock) · **PRD:** [PRD.md](PRD.md)
+> **Mã:** DE04-TN03-SRS · **Trạng thái:** đã chốt · **Người viết:** Design · **PRD:** [PRD.md](PRD.md)
 
 # UC-DE04-03 - Theo dõi chuyến và an toàn
 
-> **Bản mock.** Giá trị `[giả định]` cần BA xác nhận. SRS này mô tả chuyến từ `TAI_XE_DANG_DEN` tới `CHO_THANH_TOAN`; ghép tài xế xem [SRS TN02](../TN02-ghep-tai-xe-nhan-chuyen/SRS.md); thanh toán, huỷ xem [SRS TN04](../TN04-thanh-toan-danh-gia-huy/SRS.md).
+> SRS này mô tả chuyến từ `TAI_XE_DANG_DEN` tới `CHO_THANH_TOAN`; ghép tài xế xem [SRS TN02](../TN02-ghep-tai-xe-nhan-chuyen/SRS.md); thanh toán, huỷ xem [SRS TN04](../TN04-thanh-toan-danh-gia-huy/SRS.md).
 
 ## 1. Tổng quan
 
@@ -12,7 +12,7 @@
 | Actor | Khách · Tài xế · App khách · App tài xế · Máy chủ · Dịch vụ số trung gian · Người thân (xem link) |
 | Phạm vi | Vị trí realtime, đã đến, thời gian chờ, mã xác nhận, bắt đầu và kết thúc chuyến, gọi, nhắn tin, chia sẻ hành trình, SOS |
 | Ngoài phạm vi | Ghi âm, phát hiện bất thường tự động, đổi điểm đến giữa chuyến |
-| Nền tảng | App khách, App tài xế iOS / Android; trang xem hành trình trên Web `[giả định]` |
+| Nền tảng | App khách, App tài xế iOS / Android; trang xem hành trình trên Web |
 
 ## 2. User Story
 
@@ -29,12 +29,12 @@
 
 | **Mã** | **Quy tắc** |
 | --- | --- |
-| BR-21 | **Vị trí tài xế** gửi mỗi 5 giây khi chuyến chưa kết thúc; app khách nội suy chuyển động giữa 2 điểm. Không có vị trí mới > 30 giây → MSG-18 `[giả định]` |
+| BR-21 | **Vị trí tài xế** gửi mỗi 5 giây khi chuyến chưa kết thúc; app khách nội suy chuyển động giữa 2 điểm. Không có vị trí mới > 30 giây → MSG-18 |
 | BR-22 | **Thời gian đến** tính lại mỗi khi có vị trí mới, theo dịch vụ bản đồ; hiện làm tròn phút, tối thiểu "1 phút" |
 | BR-23 | **Đổi trạng thái** chỉ qua tài xế bấm và máy chủ xác nhận; máy chủ đẩy sự kiện cho cả hai app. App chỉ đổi màn khi nhận xác nhận |
-| BR-24 | **"Đã đến"** bật khi tài xế cách điểm đón ≤ 100 m `[giả định]` |
+| BR-24 | **"Đã đến"** bật khi tài xế cách điểm đón ≤ 100 m |
 | BR-25 | **Thời gian chờ miễn phí** tính từ "Đã đến": xe máy 3 phút, ô tô 5 phút. Sau đó chuyến sang `DANG_CHO_KHACH`, tính phí chờ theo phút (tối đa 10 phút). Mốc **"10 phút chờ"** trong cả đề là 10 phút **tính phí**, đếm từ lúc chuyến vào `DANG_CHO_KHACH`, tức 13 phút (xe máy) hoặc 15 phút (ô tô) kể từ "Đã đến". Hết 10 phút này tài xế được huỷ với lý do "Khách không đến" mà không bị ghi nhận lượt huỷ (SRS TN04). Phí chờ khi chuyến bị huỷ: xem SRS TN04, BR-37 |
-| BR-26 | **Mã xác nhận** 4 số cho chuyến có giờ đón 22:00–05:00; tài xế nhập đúng mới bắt đầu được; sai 3 lần → khoá 1 phút và gợi ý gọi cho khách `[giả định]` |
+| BR-26 | **Mã xác nhận** 4 số cho chuyến có giờ đón 22:00–05:00; tài xế nhập đúng mới bắt đầu được; sai 3 lần → khoá 1 phút và gợi ý gọi cho khách |
 | BR-27 | **Kết thúc chuyến**: tài xế bấm; nếu cách điểm đến > 500 m → hỏi xác nhận và ghi lý do. Chuyến sang `CHO_THANH_TOAN`; giá cuối tính theo SRS TN04 |
 | BR-28 | **Kênh liên lạc**: gọi qua số trung gian gán cho cặp khách – tài xế; có hiệu lực từ khi nhận chuyến tới 30 phút sau khi kết thúc. Nhắn tin trong app, tối đa 200 ký tự mỗi tin |
 | BR-29 | **Link chia sẻ hành trình**: token ngẫu nhiên, không chứa số điện thoại, tên đầy đủ của khách; hết hạn khi chuyến kết thúc hoặc huỷ |
@@ -341,7 +341,7 @@ flowchart TD
 
 ## 8. API
 
-| **API** | **Request chính** | **Response chính** | **Timeout / retry** `[giả định]` |
+| **API** | **Request chính** | **Response chính** | **Timeout / retry** |
 | --- | --- | --- | --- |
 | \[DriverLocationPush\] | trip_id, lat, lng, heading, timestamp | – | Mỗi 5 giây; lưu và gửi bù khi mất mạng |
 | \[TripEvent\] (máy chủ → hai app) | trip_id, status, driver_location, eta, wait_timer | – | Kết nối realtime; dự phòng thông báo đẩy |
@@ -406,7 +406,7 @@ sequenceDiagram
 
 ## 10. Yêu cầu phi chức năng
 
-| **Mục** | **Yêu cầu** `[giả định]` |
+| **Mục** | **Yêu cầu** |
 | --- | --- |
 | Hiệu năng | Sự kiện trạng thái tới app còn lại ≤ 2 giây (p95); vị trí tài xế hiện trên app khách ≤ 10 giây |
 | Nhất quán | Mọi đổi trạng thái idempotent theo request_id; app không đổi màn khi chưa có xác nhận của máy chủ |
