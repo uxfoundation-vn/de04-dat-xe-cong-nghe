@@ -208,6 +208,8 @@ AC02: Hai phía chuyển sang màn thanh toán (TN04).
 
 ## 10. Câu hỏi mở
 
+> Câu nào đã có giá trị ở mục 5 thì giá trị đó là **tạm chốt** `[giả định]` để dựng flow. Câu hỏi vẫn để mở cho đến khi PO xác nhận.
+
 - Mã xác nhận có áp dụng cho mọi chuyến, không chỉ ban đêm?
 - Phí chờ có áp dụng cho xe máy không?
 - Đội an toàn hoạt động 24/7 hay theo khung giờ?

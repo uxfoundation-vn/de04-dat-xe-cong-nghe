@@ -27,10 +27,12 @@ stateDiagram-v2
   TAI_XE_DANG_DEN --> DANG_TIM_TAI_XE : Tài xế huỷ, tìm tài xế khác, TN02
   TAI_XE_DANG_DEN --> DA_HUY : Khách huỷ, TN04
   TAI_XE_DA_DEN --> DA_HUY : Khách huỷ, TN04
+  TAI_XE_DA_DEN --> DANG_TIM_TAI_XE : Tài xế huỷ, tìm tài xế khác, TN02
   TAI_XE_DA_DEN --> DANG_CHO_KHACH : Hết thời gian chờ miễn phí, TN03
   DANG_CHO_KHACH --> DANG_DI : Tài xế bấm Bắt đầu
   TAI_XE_DA_DEN --> DANG_DI : Tài xế bấm Bắt đầu, TN03
   DANG_CHO_KHACH --> DA_HUY : Khách huỷ hoặc khách không đến, TN04
+  DANG_CHO_KHACH --> DANG_TIM_TAI_XE : Tài xế huỷ trước khi hết 10 phút chờ tính phí, TN02
   DANG_DI --> CHO_THANH_TOAN : Tài xế bấm Kết thúc, TN03
   CHO_THANH_TOAN --> HOAN_THANH : Đã thanh toán, TN04
   KHONG_TIM_DUOC --> [*]

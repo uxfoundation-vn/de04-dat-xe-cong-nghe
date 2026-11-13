@@ -32,12 +32,12 @@
 | **Mã** | **Quy tắc** |
 | --- | --- |
 | BR-32 | **Phương thức**: `TIEN_MAT`, `VI_LIEN_KET`. Mặc định là phương thức của chuyến trước. Ví không đủ số dư cho giá ước tính → MSG-27 gợi ý tiền mặt |
-| BR-33 | **Giá cuối** = giá chốt (TN01) + phí chờ (BR-25) + phí huỷ còn nợ của khách (BR-38). Lộ trình thực tế dài hơn lộ trình đề xuất > 20% → giá chuyến tính lại theo km, phút thực tế; ngắn hơn → giữ giá chốt `[giả định]` |
+| BR-33 | **Giá cuối** = giá chốt (TN01) + phí chờ (BR-25) + phí huỷ còn nợ của khách (BR-38). Lộ trình thực tế dài hơn lộ trình đề xuất > 20% → giá chuyến tính lại theo km, phút thực tế; ngắn hơn → giữ giá chốt `[giả định]`. Ngoại lệ: chuyến dừng giữa đường do phía tài xế (xe hỏng, sự cố; TN03 UC-07 A2) → tính theo km, phút thực tế và không vượt giá chốt. Khách yêu cầu xuống sớm vẫn giữ giá chốt |
 | BR-34 | **Thanh toán ví**: tự gọi trừ ví khi chuyến sang `CHO_THANH_TOAN`, idempotency key = trip_id. Thất bại hoặc không phản hồi trong 10 giây → kiểm tra lại trạng thái giao dịch; vẫn chưa thành công → chuyển `TIEN_MAT`, báo hai phía (MSG-29) |
 | BR-35 | **Thanh toán tiền mặt**: tài xế bấm "Đã thu {số tiền}" → chuyến `HOAN_THANH` |
-| BR-36 | **Huỷ của khách** – miễn phí khi: chuyến `DANG_TIM_TAI_XE`; trong 2 phút đầu kể từ lúc có tài xế; hoặc tài xế trễ > 5 phút so với thời gian đến dự kiến lúc nhận. Ngoài các trường hợp trên: phí huỷ xe máy 10.000 ₫, ô tô 20.000 ₫. Không huỷ được từ `DANG_DI` `[giả định]` |
-| BR-37 | **Huỷ của tài xế**: trước khi đón (TN02, BR-19) → khách không phí. "Khách không đến" chỉ bật sau 10 phút chờ (BR-25) → chuyến `DA_HUY`, khách chịu phí huỷ, tài xế nhận phí huỷ |
-| BR-38 | **Thu phí huỷ**: ví → trừ ngay; tiền mặt hoặc ví lỗi → ghi nợ, cộng vào giá cuối chuyến kế tiếp (một khoản nợ mỗi lần; nợ > 50.000 ₫ thì phải thanh toán trước khi đặt chuyến mới) `[giả định]` |
+| BR-36 | **Huỷ của khách** – miễn phí khi: chuyến `DANG_TIM_TAI_XE`; trong 2 phút đầu kể từ lúc có tài xế; hoặc tài xế trễ > 5 phút so với thời gian đến dự kiến lúc nhận. Ba điều kiện miễn phí này áp dụng ở mọi trạng thái trước `DANG_DI`, kể cả khi tài xế đã đến. Ngoài các trường hợp trên: phí huỷ xe máy 10.000 ₫, ô tô 20.000 ₫. Khách huỷ ở `DANG_CHO_KHACH` trả thêm **phí chờ đã phát sinh** tới lúc huỷ. Không huỷ được từ `DANG_DI` `[giả định]` |
+| BR-37 | **Huỷ của tài xế**: trước khi bắt đầu chuyến, ở `TAI_XE_DANG_DEN`, `TAI_XE_DA_DEN`, hoặc `DANG_CHO_KHACH` chưa hết 10 phút chờ tính phí (TN02, BR-19) → chuyến quay về `DANG_TIM_TAI_XE`, khách không phí huỷ, không thu phí chờ. "Khách không đến" chỉ bật sau 10 phút chờ tính phí (BR-25) → chuyến `DA_HUY`, khách chịu phí huỷ **và phí chờ đã phát sinh** (đủ 10 phút), tài xế nhận cả hai khoản |
+| BR-38 | **Thu phí huỷ**: ví → trừ ngay; tiền mặt hoặc ví lỗi → ghi nợ, cộng vào giá cuối chuyến kế tiếp (một khoản nợ mỗi lần; nợ > 50.000 ₫ thì phải thanh toán trước khi đặt chuyến mới) `[giả định]`. Phí chờ thu kèm phí huỷ (BR-36, BR-37) được thu và ghi nợ cùng cách. **Trả nợ**: nút \[Thanh toán\] ở MSG-36 mở màn trả nợ bằng ví liên kết, cho liên kết ví ngay tại đó. Khách không dùng ví chọn "Trả bằng tiền mặt ở chuyến tới": được đặt đúng một chuyến `TIEN_MAT`, toàn bộ nợ cộng vào giá cuối chuyến đó để tài xế thu hộ; chưa trả hết thì không đặt được chuyến tiếp theo |
 | BR-39 | **Tip**: chỉ khi thanh toán ví; 5.000 / 10.000 / 20.000 ₫ hoặc tự nhập ≤ 100.000 ₫; trừ ví riêng, 100% cho tài xế; chỉ trong lúc đánh giá |
 | BR-40 | **Đánh giá**: 1–5 sao; ≤ 3 sao bắt buộc ≥ 1 lý do; nhận xét ≤ 200 ký tự; trong 24 giờ sau chuyến; mỗi bên đánh giá 1 lần, không sửa. Điểm hiển thị = trung bình 100 chuyến gần nhất, cần ≥ 5 đánh giá |
 | BR-41 | **Đánh giá liên quan an toàn** (lý do "Lái xe nguy hiểm", "Quấy rối") → tự tạo ticket đội an toàn |
@@ -65,9 +65,10 @@ stateDiagram-v2
 | --- | --- | --- |
 | `DANG_TIM_TAI_XE` | Khách | Không |
 | `TAI_XE_DANG_DEN`, ≤ 2 phút từ lúc có tài xế | Khách; tài xế | Không |
-| `TAI_XE_DANG_DEN`, > 2 phút | Khách (có phí, trừ khi tài xế trễ > 5 phút); tài xế (khách không phí) | Khách huỷ: phí huỷ |
-| `TAI_XE_DA_DEN`, `DANG_CHO_KHACH` < 10 phút | Khách (có phí); tài xế (khách không phí) | Khách huỷ: phí huỷ |
-| `DANG_CHO_KHACH` ≥ 10 phút | Khách (có phí); tài xế chọn "Khách không đến" (khách chịu phí) | Phí huỷ |
+| `TAI_XE_DANG_DEN`, > 2 phút | Khách (có phí, trừ khi tài xế trễ > 5 phút); tài xế (khách không phí, chuyến về `DANG_TIM_TAI_XE`) | Khách huỷ: phí huỷ |
+| `TAI_XE_DA_DEN` | Khách (có phí, trừ khi còn trong 2 phút đầu từ lúc có tài xế hoặc tài xế trễ > 5 phút, BR-36); tài xế (khách không phí, chuyến về `DANG_TIM_TAI_XE`) | Khách huỷ: phí huỷ |
+| `DANG_CHO_KHACH`, chưa hết 10 phút chờ tính phí | Khách (có phí, trừ khi tài xế trễ > 5 phút); tài xế (khách không phí, chuyến về `DANG_TIM_TAI_XE`, xoá phí chờ) | Khách huỷ: phí huỷ + phí chờ đã phát sinh |
+| `DANG_CHO_KHACH`, đã hết 10 phút chờ tính phí | Khách (có phí); tài xế chọn "Khách không đến" (khách chịu phí, chuyến `DA_HUY`) | Phí huỷ + phí chờ 10 phút |
 | `DANG_DI` trở đi | Không ai huỷ được | – |
 
 ## 5. Use Case
@@ -150,8 +151,8 @@ flowchart TD
   H -->|Có, tiền mặt hoặc ví lỗi| K["Ghi nợ BR-38"] --> I
   I --> L["Tài xế: MSG-32, về DANG_RANH"]
   A -->|Tài xế| M{"Lý do"}
-  M -->|Khách không đến, chờ ≥ 10 phút| N["DA_HUY, khách chịu phí, MSG-33"]
-  M -->|Lý do khác, trước khi đón| O["Tìm tài xế khác cho khách, TN02 UC-05"]
+  M -->|Khách không đến, hết 10 phút chờ tính phí| N["DA_HUY, khách chịu phí huỷ và phí chờ, MSG-33"]
+  M -->|Lý do khác, trước khi bắt đầu chuyến| O["Tìm tài xế khác cho khách, TN02 UC-05"]
   B -->|DANG_DI| P["Không có nút huỷ"]
 ```
 
@@ -171,7 +172,9 @@ flowchart TD
 | --- | --- | --- |
 | A1 | Huỷ khi đang tìm | Không hỏi lý do, không phí |
 | A2 | Tài xế trễ > 5 phút | Phí 0 ₫, lý do mặc định "Tài xế đến trễ" |
-| A3 | Tài xế chọn "Khách không đến" | BR-37; khách nhận MSG-33 |
+| A3 | Tài xế chọn "Khách không đến" | BR-37: thu phí huỷ và phí chờ; khách nhận MSG-33 |
+| A5 | Tài xế huỷ vì lý do khác khi đã đến (`TAI_XE_DA_DEN`, hoặc `DANG_CHO_KHACH` chưa hết 10 phút chờ tính phí) | Chuyến về `DANG_TIM_TAI_XE` theo TN02 UC-05; khách không phí huỷ, không phí chờ |
+| A6 | Khách huỷ ở `DANG_CHO_KHACH` | MSG-30 hiện phí huỷ kèm phí chờ đã phát sinh; thu theo BR-38 |
 | A4 | Trạng thái đổi giữa lúc báo phí và lúc xác nhận | Máy chủ tính lại; phí khác → hiện lại MSG-30 |
 
 ### UC-12 Đánh giá hai chiều
@@ -280,7 +283,7 @@ flowchart TD
 | Chọn phương thức ở **SCR-K03** | Bảng chọn phương thức | BR-32 |
 | Chuyến sang `CHO_THANH_TOAN` | UC-10, **SCR-K06**, **SCR-T05** | Tự động |
 | "Huỷ chuyến" ở **SCR-K04**, **SCR-K05** | UC-11 | |
-| "Khách không đến" ở **SCR-T03** | UC-11 (A3) | Sau 10 phút chờ |
+| "Khách không đến" ở **SCR-T03** | UC-11 (A3) | Sau 10 phút chờ tính phí (BR-25) |
 | Sau thanh toán | UC-12 | |
 | Hồ sơ → Lịch sử chuyến | UC-13, **SCR-K08** | |
 | Thông báo "Bạn chưa đánh giá chuyến" | UC-12 | Gửi 1 lần sau 2 giờ `[giả định]` |
@@ -395,13 +398,13 @@ sequenceDiagram
 | MSG-27 | Inline **SCR-K03** | Số dư ví không đủ cho chuyến này. \[Dùng tiền mặt\] \[Nạp ví\] |
 | MSG-28 | Toast hai phía | Đã thanh toán {số tiền} ₫ |
 | MSG-29 | Popup hai phía | Thanh toán ví chưa thành công. Vui lòng thanh toán {số tiền} ₫ bằng tiền mặt cho tài xế |
-| MSG-30 | Popup (khách) | Huỷ chuyến? {Bạn sẽ không mất phí / Phí huỷ: {x} ₫ vì tài xế đã nhận chuyến hơn 2 phút}. \[Giữ chuyến\] \[Xác nhận huỷ\] |
+| MSG-30 | Popup (khách) | Huỷ chuyến? {Bạn sẽ không mất phí / Phí huỷ: {x} ₫ vì tài xế đã nhận chuyến hơn 2 phút{, cộng phí chờ {y} ₫}}. \[Giữ chuyến\] \[Xác nhận huỷ\] |
 | MSG-31 | Toast (khách) | Đã huỷ chuyến{, phí huỷ {x} ₫ {đã trừ ví / sẽ cộng vào chuyến sau}} |
 | MSG-32 | Popup (tài xế) | Khách đã huỷ chuyến{. Bạn nhận {x} ₫ phí huỷ} |
-| MSG-33 | Thông báo đẩy (khách) | Tài xế đã chờ 10 phút và huỷ chuyến. Phí huỷ {x} ₫ |
+| MSG-33 | Thông báo đẩy (khách) | Tài xế đã chờ {n} phút tại điểm đón và huỷ chuyến vì không gặp bạn. Phí huỷ {x} ₫, phí chờ {y} ₫ |
 | MSG-34 | Thông báo (tài xế) | Khách đã tip cho bạn {x} ₫ |
 | MSG-35 | Toast | Đã gửi báo cáo, mã {issue_id}. Chúng tôi sẽ phản hồi trong {sla} |
-| MSG-36 | Popup (khách) | Bạn còn {x} ₫ phí huỷ chưa thanh toán. Vui lòng thanh toán trước khi đặt chuyến mới. \[Thanh toán\] |
+| MSG-36 | Popup (khách) | Bạn còn {x} ₫ phí huỷ chưa thanh toán. Vui lòng thanh toán trước khi đặt chuyến mới. \[Thanh toán bằng ví\] \[Trả bằng tiền mặt ở chuyến tới\] |
 | MSG-37 | Thông báo đẩy (khách) | Chuyến của bạn với {tài xế} thế nào? \[Đánh giá\] |
 | MSG-38 | Inline | Chuyến đã bắt đầu nên không thể huỷ. Nếu có vấn đề, hãy dùng nút an toàn |
 

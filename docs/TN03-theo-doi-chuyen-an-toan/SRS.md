@@ -34,7 +34,7 @@
 | BR-22 | **Thời gian đến** tính lại mỗi khi có vị trí mới, theo dịch vụ bản đồ; hiện làm tròn phút, tối thiểu "1 phút" |
 | BR-23 | **Đổi trạng thái** chỉ qua tài xế bấm và máy chủ xác nhận; máy chủ đẩy sự kiện cho cả hai app. App chỉ đổi màn khi nhận xác nhận |
 | BR-24 | **"Đã đến"** bật khi tài xế cách điểm đón ≤ 100 m `[giả định]` |
-| BR-25 | **Thời gian chờ miễn phí** tính từ "Đã đến": xe máy 3 phút, ô tô 5 phút. Sau đó chuyến sang `DANG_CHO_KHACH`, tính phí chờ theo phút (tối đa 10 phút); hết 10 phút tài xế được huỷ không bị tính (SRS TN04) |
+| BR-25 | **Thời gian chờ miễn phí** tính từ "Đã đến": xe máy 3 phút, ô tô 5 phút. Sau đó chuyến sang `DANG_CHO_KHACH`, tính phí chờ theo phút (tối đa 10 phút). Mốc **"10 phút chờ"** trong cả đề là 10 phút **tính phí**, đếm từ lúc chuyến vào `DANG_CHO_KHACH`, tức 13 phút (xe máy) hoặc 15 phút (ô tô) kể từ "Đã đến". Hết 10 phút này tài xế được huỷ với lý do "Khách không đến" mà không bị ghi nhận lượt huỷ (SRS TN04). Phí chờ khi chuyến bị huỷ: xem SRS TN04, BR-37 |
 | BR-26 | **Mã xác nhận** 4 số cho chuyến có giờ đón 22:00–05:00; tài xế nhập đúng mới bắt đầu được; sai 3 lần → khoá 1 phút và gợi ý gọi cho khách `[giả định]` |
 | BR-27 | **Kết thúc chuyến**: tài xế bấm; nếu cách điểm đến > 500 m → hỏi xác nhận và ghi lý do. Chuyến sang `CHO_THANH_TOAN`; giá cuối tính theo SRS TN04 |
 | BR-28 | **Kênh liên lạc**: gọi qua số trung gian gán cho cặp khách – tài xế; có hiệu lực từ khi nhận chuyến tới 30 phút sau khi kết thúc. Nhắn tin trong app, tối đa 200 ký tự mỗi tin |
@@ -56,8 +56,10 @@ stateDiagram-v2
   DANG_DI --> CHO_THANH_TOAN : Kết thúc chuyến
   TAI_XE_DANG_DEN --> [*] : Tài xế huỷ, chuyến về DANG_TIM_TAI_XE, TN02
   TAI_XE_DANG_DEN --> DA_HUY : Khách huỷ, TN04
-  TAI_XE_DA_DEN --> DA_HUY : Huỷ, TN04
-  DANG_CHO_KHACH --> DA_HUY : Huỷ, TN04
+  TAI_XE_DA_DEN --> [*] : Tài xế huỷ, chuyến về DANG_TIM_TAI_XE, TN02
+  DANG_CHO_KHACH --> [*] : Tài xế huỷ trước khi hết 10 phút chờ tính phí, chuyến về DANG_TIM_TAI_XE, TN02
+  TAI_XE_DA_DEN --> DA_HUY : Khách huỷ, TN04
+  DANG_CHO_KHACH --> DA_HUY : Khách huỷ hoặc khách không đến, TN04
   CHO_THANH_TOAN --> [*]
   DA_HUY --> [*]
 ```
@@ -68,7 +70,7 @@ stateDiagram-v2
 | --- | --- | --- |
 | `TAI_XE_DANG_DEN` | Xe trên bản đồ, "Đến trong {n} phút", thông tin tài xế, Gọi, Nhắn, nút an toàn | **SCR-T03** chỉ đường tới điểm đón, nút "Đã đến" (bật theo BR-24) |
 | `TAI_XE_DA_DEN` | "Tài xế đã đến", biển số to, đồng hồ chờ miễn phí, mã xác nhận (ban đêm) | Đồng hồ chờ, ô nhập mã (ban đêm), nút "Bắt đầu chuyến" |
-| `DANG_CHO_KHACH` | "Đang tính phí chờ: {x} ₫", đồng hồ | "Đang tính phí chờ", nút Huỷ sau 10 phút |
+| `DANG_CHO_KHACH` | "Đang tính phí chờ: {x} ₫", đồng hồ | "Đang tính phí chờ", nút "Huỷ – khách không đến" sau 10 phút chờ tính phí |
 | `DANG_DI` | Lộ trình, "Tới nơi lúc {giờ}", chia sẻ hành trình, nút an toàn | **SCR-T04** chỉ đường tới điểm đến, nút "Kết thúc chuyến" |
 | `CHO_THANH_TOAN` | Chuyển sang **SCR-K06** (SRS TN04) | Chuyển sang **SCR-T05** (SRS TN04) |
 
@@ -125,7 +127,7 @@ flowchart TD
 | **Mã** | **Điều kiện** | **Xử lý** |
 | --- | --- | --- |
 | A1 | Hết thời gian chờ miễn phí | `DANG_CHO_KHACH`; khách nhận MSG-20; bắt đầu tính phí chờ |
-| A2 | Chờ quá 10 phút | Tài xế có nút "Huỷ – khách không đến" (SRS TN04) |
+| A2 | Chờ tính phí quá 10 phút (BR-25) | Tài xế có nút "Huỷ – khách không đến" (SRS TN04) |
 | A3 | Mã xác nhận sai 3 lần | Khoá 1 phút, MSG-21 gợi ý gọi khách |
 | A4 | Tài xế bấm "Đã đến" khi còn xa | Nút disabled kèm "Còn {m} m tới điểm đón" |
 | A5 | Khách ra trước khi tài xế đến | Khách nhắn tin mẫu "Tôi đang đứng ở điểm đón" |
@@ -173,7 +175,7 @@ flowchart TD
 | **Mã** | **Điều kiện** | **Xử lý** |
 | --- | --- | --- |
 | A1 | Chuyến phải dừng giữa đường: xe hỏng, sự cố, khách yêu cầu xuống sớm | Tài xế bấm Kết thúc chuyến; cách điểm đến > 500 m nên hiện MSG-22, tài xế chọn lý do rồi xác nhận. Chuyến sang `CHO_THANH_TOAN`, không qua `DA_HUY` |
-| A2 | Dừng giữa đường do phía tài xế (xe hỏng, sự cố) | Giá tính theo km, phút thực tế và không vượt giá chốt; lý do lưu vào chuyến để tổng đài đối soát |
+| A2 | Dừng giữa đường do phía tài xế (xe hỏng, sự cố) | Ngoại lệ của quy tắc "ngắn hơn thì giữ giá chốt" (BR-33): giá tính theo km, phút thực tế và không vượt giá chốt; lý do lưu vào chuyến để tổng đài đối soát |
 | A3 | Khách yêu cầu xuống sớm | Giữ giá chốt theo BR-33 |
 
 **Luồng lỗi**

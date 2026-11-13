@@ -38,7 +38,7 @@
 | BR-16 | **Nhận chuyến**: máy chủ kiểm tra chuyến còn `DANG_TIM_TAI_XE` và yêu cầu còn hạn; đúng → gán tài xế, chuyến `TAI_XE_DANG_DEN`, tài xế `DANG_CHAY`. Sai → MSG-14 cho tài xế |
 | BR-17 | **Thời gian tìm tối đa** 3 phút; hết giờ → chuyến `KHONG_TIM_DUOC`, không thu phí |
 | BR-18 | **Thu nhập dự kiến** trên thẻ = giá chốt × (1 − tỉ lệ chiết khấu); tỉ lệ theo loại xe `[giả định]` |
-| BR-19 | **Tài xế huỷ sau khi nhận** (trước khi đón khách): chuyến quay về `DANG_TIM_TAI_XE`, giữ nguyên giá chốt, đồng hồ 3 phút tính lại từ đầu; tài xế vừa huỷ bị loại khỏi chuyến này. Mỗi chuyến tìm lại tối đa 2 lần; tài xế thứ 3 huỷ → chuyến `KHONG_TIM_DUOC`, không thu phí |
+| BR-19 | **Tài xế huỷ sau khi nhận** (trước khi bắt đầu chuyến, tức ở `TAI_XE_DANG_DEN`, `TAI_XE_DA_DEN`, hoặc `DANG_CHO_KHACH` khi chưa hết 10 phút chờ tính phí): chuyến quay về `DANG_TIM_TAI_XE`, khách không mất phí huỷ, phí chờ đã phát sinh (nếu có) bị xoá, giữ nguyên giá chốt, đồng hồ 3 phút tính lại từ đầu; tài xế vừa huỷ bị loại khỏi chuyến này. Mỗi chuyến tìm lại tối đa 2 lần; tài xế thứ 3 huỷ → chuyến `KHONG_TIM_DUOC`, không thu phí |
 | BR-20 | **Tắt nhận chuyến** khi đang xem yêu cầu → tính là bỏ qua. Mất kết nối > 30 giây khi rảnh → tạm không được gửi yêu cầu |
 
 ## 4. Trạng thái
@@ -189,7 +189,7 @@ flowchart TD
 
 | **Mục** | **Nội dung** |
 | --- | --- |
-| Tiền điều kiện | Chuyến `TAI_XE_DANG_DEN`, chưa đón khách |
+| Tiền điều kiện | Chuyến `TAI_XE_DANG_DEN`, `TAI_XE_DA_DEN`, hoặc `DANG_CHO_KHACH` chưa hết 10 phút chờ tính phí; chưa bắt đầu chuyến. Hết 10 phút chờ tính phí thì tài xế dùng "Khách không đến" (SRS TN04, BR-37) |
 | Hậu điều kiện | Chuyến quay về `DANG_TIM_TAI_XE`; khách được tìm tài xế mới |
 
 ```mermaid
@@ -209,7 +209,7 @@ flowchart TD
 | 1 | Tài xế | Ở **SCR-T03**, bấm Huỷ chuyến |
 | 2 | Tài xế | Chọn lý do huỷ |
 | 3 | Hệ thống | Gọi \[TripDriverCancel\]; ghi nhận lượt huỷ cho tài xế, tài xế về `DANG_RANH` |
-| 4 | Hệ thống | Chuyến về `DANG_TIM_TAI_XE`, giữ giá chốt (BR-19) |
+| 4 | Hệ thống | Chuyến về `DANG_TIM_TAI_XE`, giữ giá chốt, xoá phí chờ đã phát sinh (BR-19) |
 | 5 | Hệ thống | Khách nhận MSG-17 |
 | 6 | Hệ thống | Chạy lại UC-04, loại tài xế vừa huỷ |
 

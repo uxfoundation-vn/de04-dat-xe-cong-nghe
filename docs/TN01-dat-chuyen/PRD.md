@@ -200,6 +200,8 @@ AC02: Sửa, xoá địa điểm đã lưu trong Hồ sơ.
 
 ## 10. Câu hỏi mở
 
+> Câu nào đã có giá trị ở mục 5 thì giá trị đó là **tạm chốt** `[giả định]` để dựng flow. Câu hỏi vẫn để mở cho đến khi PO xác nhận.
+
 - Có cho đặt khi điểm đón ngoài vùng nhưng điểm đến trong vùng?
 - Hệ số cao điểm tối đa là bao nhiêu, ai quyết định?
 - Có gợi ý điểm đón chuẩn (cổng chính, sảnh) cho toà nhà lớn?

@@ -196,6 +196,8 @@ AC01: Tài xế huỷ → khách được báo và hệ thống tự tìm tài x
 
 ## 10. Câu hỏi mở
 
+> Câu nào đã có giá trị ở mục 5 thì giá trị đó là **tạm chốt** `[giả định]` để dựng flow. Câu hỏi vẫn để mở cho đến khi PO xác nhận.
+
 - Có ẩn điểm đến với tài xế trước khi nhận để tránh chọn chuyến không?
 - Tài xế bỏ qua nhiều lần có bị tạm tắt nhận chuyến không?
 - Thời gian tìm tối đa 3 phút có hợp lý ở giờ cao điểm?

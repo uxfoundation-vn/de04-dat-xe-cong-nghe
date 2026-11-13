@@ -78,11 +78,11 @@ Hai bên đánh giá độc lập, không thấy điểm của nhau trước khi
 
 | **Quy tắc** | **Giá trị** `[giả định]` |
 | --- | --- |
-| Giá cuối | Giá chốt + phí chờ; lộ trình thực tế dài hơn đề xuất > 20% thì tính lại theo thực tế, ngắn hơn thì giữ giá chốt |
+| Giá cuối | Giá chốt + phí chờ; lộ trình thực tế dài hơn đề xuất > 20% thì tính lại theo thực tế, ngắn hơn thì giữ giá chốt. Riêng chuyến dừng giữa đường do phía tài xế thì tính theo thực tế, không vượt giá chốt |
 | Huỷ miễn phí | Khi đang tìm tài xế; trong 2 phút đầu sau khi có tài xế; khi tài xế đến trễ > 5 phút so với dự kiến |
 | Phí huỷ | Sau 2 phút kể từ khi có tài xế: xe máy 10.000 ₫, ô tô 20.000 ₫ |
-| Tài xế huỷ vì khách không đến | Sau 10 phút chờ; khách bị tính phí huỷ |
-| Phí huỷ với tiền mặt | Cộng vào chuyến sau của khách |
+| Tài xế huỷ vì khách không đến | Sau 10 phút chờ tính phí (sau thời gian chờ miễn phí); khách bị tính phí huỷ và phí chờ |
+| Phí huỷ với tiền mặt | Cộng vào chuyến sau của khách; nợ > 50.000 ₫ thì trả bằng ví trong app, hoặc trả tiền mặt cho tài xế ở chuyến kế tiếp |
 | Tip | 5.000, 10.000, 20.000 ₫ hoặc tự nhập ≤ 100.000 ₫; chỉ với ví |
 | Đánh giá | 1–5 sao; ≤ 3 sao bắt buộc chọn lý do; nhận xét ≤ 200 ký tự; trong 24 giờ sau chuyến |
 | Báo cáo sự cố | Trong 7 ngày sau chuyến |
@@ -172,9 +172,9 @@ AC04: Không huỷ được khi đã bắt đầu chuyến.
 
 User Story: Là tài xế, tôi muốn huỷ chuyến khi khách không đến và được bù để không mất công chờ.
 
-AC01: Sau 10 phút chờ, tài xế có nút "Khách không đến"; khách bị tính phí huỷ và được báo.
+AC01: Sau 10 phút chờ tính phí, tài xế có nút "Khách không đến"; khách bị tính phí huỷ, phí chờ và được báo.
 
-AC02: Tài xế huỷ vì lý do khác trước khi đón (TN02) → khách không bị phí.
+AC02: Tài xế huỷ vì lý do khác trước khi bắt đầu chuyến, kể cả khi đã đến điểm đón (TN02) → khách không bị phí, hệ thống tìm tài xế khác.
 
 ### UC3. Đánh giá
 
@@ -227,6 +227,8 @@ AC02: Gửi xong có mã yêu cầu và thời gian phản hồi dự kiến.
 | Đánh giá trả đũa | Bên này chấm thấp vì bị chấm thấp | Ẩn điểm từng chuyến; chỉ hiện trung bình |
 
 ## 10. Câu hỏi mở
+
+> Câu nào đã có giá trị ở mục 5 thì giá trị đó là **tạm chốt** `[giả định]` để dựng flow. Câu hỏi vẫn để mở cho đến khi PO xác nhận.
 
 - Phí huỷ tiền mặt có giới hạn số chuyến cộng dồn không?
 - Có cho khách sửa đánh giá sau khi gửi?
