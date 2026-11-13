@@ -228,9 +228,9 @@ AC02: Gửi xong có mã yêu cầu và thời gian phản hồi dự kiến.
 
 ## 10. Câu hỏi mở
 
-> Câu nào đã có giá trị ở mục 5 thì giá trị đó là **tạm chốt** `[giả định]` để dựng flow. Câu hỏi vẫn để mở cho đến khi PO xác nhận.
+> Mọi câu hỏi dưới đây đã được PO chốt ngày 13/11/2026; quyết định ghi sau mỗi câu và đã cập nhật vào SRS.
 
-- Phí huỷ tiền mặt có giới hạn số chuyến cộng dồn không?
-- Có cho khách sửa đánh giá sau khi gửi?
-- Ngưỡng lộ trình dài hơn 20% có hợp lý không?
-- Tip có áp dụng cho tiền mặt (khách đưa thêm, tài xế ghi nhận) không?
+- Phí huỷ tiền mặt có giới hạn số chuyến cộng dồn không? → **Đã chốt:** Giới hạn theo số tiền, không theo số chuyến: nợ > 50.000 ₫ phải trả trước khi đặt chuyến mới (SRS BR-38).
+- Có cho khách sửa đánh giá sau khi gửi? → **Đã chốt:** Không. Mỗi bên đánh giá 1 lần (SRS BR-40).
+- Ngưỡng lộ trình dài hơn 20% có hợp lý không? → **Đã chốt:** Giữ 20% (SRS BR-33).
+- Tip có áp dụng cho tiền mặt (khách đưa thêm, tài xế ghi nhận) không? → **Đã chốt:** Không. Tip chỉ qua ví (SRS BR-39).
