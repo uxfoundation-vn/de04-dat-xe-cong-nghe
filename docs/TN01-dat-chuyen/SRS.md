@@ -35,9 +35,11 @@
 | BR-04 | **Gợi ý điểm đến**: khi mở ô tìm hiện Nhà, Công ty, địa điểm đã lưu, 5 điểm đến gần nhất; khi gõ ≥ 2 ký tự gọi tìm địa chỉ, chấp nhận không dấu, chờ 300 ms sau lần gõ cuối |
 | BR-05 | **Giá ước tính** = max(giá tối thiểu, giá mở cửa + đơn giá km × km + đơn giá phút × phút) × hệ số cao điểm, làm tròn lên 1.000 ₫. Đơn giá theo loại xe và thành phố `[giả định]` |
 | BR-06 | **Hiệu lực giá** 5 phút kể từ lúc tính (quote_id). Quá hạn khi bấm Đặt → tính lại; giá mới khác giá cũ → MSG-05 trước khi tạo chuyến |
-| BR-07 | **Cao điểm**: hệ số > 1,0 thì nhãn "Cao điểm ×{hệ số}"; lần đầu mỗi phiên phải đồng ý (MSG-04). Giá sau khi khách đã đặt không đổi vì cao điểm |
+| BR-07 | **Cao điểm**: hệ số do hệ thống tự tính từ **dữ liệu giao thông Google Maps** trả về cho lộ trình: hệ số = thời gian đi có giao thông / thời gian đi bình thường, làm tròn 0,1; < 1,2 coi là 1,0; trần ×2,0 `[giả định]`; không ai chỉnh tay. Hệ số > 1,0 thì nhãn "Cao điểm ×{hệ số}"; lần đầu mỗi phiên phải đồng ý (MSG-04). Giá sau khi khách đã đặt không đổi vì cao điểm |
 | BR-08 | **Loại xe không khả dụng** khi không có tài xế đang rảnh trong bán kính 5 km `[giả định]`; hiện "Không có xe gần bạn", disabled |
 | BR-09 | **Tạo chuyến** dùng idempotency key cho mỗi lần xác nhận; bấm nhiều lần chỉ tạo 1 chuyến. Khách đang có chuyến chưa kết thúc thì không đặt thêm được (MSG-07) |
+| BR-44 | **Điểm đón chuẩn**: điểm đón rơi vào khu vực lớn (toà nhà, trung tâm thương mại, bệnh viện, sân bay) có khai báo điểm đón chuẩn (cổng, sảnh) → **SCR-K01** hiện tối đa 3 điểm chuẩn gần nhất, chọn sẵn điểm gần nhất; khách chạm để đổi hoặc vẫn giữ ghim tự do. Dữ liệu điểm chuẩn do vận hành khai báo `[giả định]` |
+| BR-45 | **Xe gần bạn**: **SCR-K01** hiện tối đa 10 tài xế `DANG_RANH` trong bán kính 3 km, đúng loại xe đang chọn (mặc định loại phổ biến nhất); vị trí làm lệch ngẫu nhiên ~50 m, cập nhật mỗi 10 giây; không hiện tên, biển số `[giả định]` |
 | BR-10 | **Ghi chú cho tài xế** tối đa 100 ký tự. **Địa điểm đã lưu**: Nhà, Công ty và tối đa 10 địa điểm khác, tên 1–30 ký tự |
 
 ## 4. Trạng thái
@@ -214,6 +216,8 @@ flowchart TD
 | 4 | Ô "Bạn muốn đi đâu?" | Search bar | Mở **SCR-K02** |
 | 5 | Lối tắt | Chips | Nhà, Công ty (nếu có), 2 điểm đến gần nhất |
 | 6 | Cảnh báo định vị | Banner | MSG-02 |
+| 7 | Điểm đón chuẩn | Chips trên bản đồ | Tối đa 3; điểm đang chọn tô đậm (BR-44) |
+| 8 | Xe gần bạn | Biểu tượng xe | Theo BR-45 |
 
 ### SCR-K02 Chọn điểm đón, điểm đến
 
@@ -244,8 +248,10 @@ flowchart TD
 | \[ReverseGeocode\] | lat, lng | Tên điểm, địa chỉ, điểm đường đã khớp | 3s / 1 lần |
 | \[PlaceSearch\] | keyword, vị trí hiện tại | Danh sách gợi ý | 3s / không retry |
 | \[ServiceAreaCheck\] | lat, lng | in_area | 3s / 1 lần |
-| \[FareQuote\] | pickup, dropoff | Từng loại xe: quote_id, giá, hệ số, thời gian đến, khả dụng; lộ trình, km, phút; expires_at | 5s / 1 lần |
+| \[FareQuote\] | pickup, dropoff | Từng loại xe: quote_id, giá, hệ số (từ Google Maps, BR-07), thời gian đến, khả dụng; lộ trình, km, phút; expires_at | 5s / 1 lần |
 | \[TripCreate\] | quote_id, vehicle_type, pickup, dropoff, note, payment_method, idempotency_key | trip_id, trạng thái `DANG_TIM_TAI_XE`, giá chốt | 8s / gửi lại cùng key |
+| \[PickupPoints\] | lat, lng | Tối đa 3 điểm đón chuẩn | 3s / 1 lần; BR-44 |
+| \[NearbyDrivers\] | lat, lng, vehicle_type | Tối đa 10 vị trí đã làm lệch | 3s / không retry; gọi mỗi 10 giây (BR-45) |
 | \[SavedPlaceSave\] | name, lat, lng, type (HOME, WORK, OTHER) | place_id | 5s / 1 lần |
 
 ```mermaid

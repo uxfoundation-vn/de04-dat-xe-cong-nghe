@@ -78,11 +78,11 @@ Hai bên đánh giá độc lập, không thấy điểm của nhau trước khi
 
 | **Quy tắc** | **Giá trị** `[giả định]` |
 | --- | --- |
-| Giá cuối | Giá chốt + phí chờ; lộ trình thực tế dài hơn đề xuất > 20% thì tính lại theo thực tế, ngắn hơn thì giữ giá chốt |
+| Giá cuối | Giá chốt + phí chờ; lộ trình thực tế dài hơn đề xuất > 20% thì tính lại theo thực tế, ngắn hơn thì giữ giá chốt. Riêng chuyến dừng giữa đường do phía tài xế thì tính theo thực tế, không vượt giá chốt |
 | Huỷ miễn phí | Khi đang tìm tài xế; trong 2 phút đầu sau khi có tài xế; khi tài xế đến trễ > 5 phút so với dự kiến |
 | Phí huỷ | Sau 2 phút kể từ khi có tài xế: xe máy 10.000 ₫, ô tô 20.000 ₫ |
-| Tài xế huỷ vì khách không đến | Sau 10 phút chờ; khách bị tính phí huỷ |
-| Phí huỷ với tiền mặt | Cộng vào chuyến sau của khách |
+| Tài xế huỷ vì khách không đến | Sau 10 phút chờ tính phí (sau thời gian chờ miễn phí); khách bị tính phí huỷ và phí chờ |
+| Phí huỷ với tiền mặt | Cộng vào chuyến sau của khách; nợ > 50.000 ₫ thì trả bằng ví trong app, hoặc trả tiền mặt cho tài xế ở chuyến kế tiếp |
 | Tip | 5.000, 10.000, 20.000 ₫ hoặc tự nhập ≤ 100.000 ₫; chỉ với ví |
 | Đánh giá | 1–5 sao; ≤ 3 sao bắt buộc chọn lý do; nhận xét ≤ 200 ký tự; trong 24 giờ sau chuyến |
 | Báo cáo sự cố | Trong 7 ngày sau chuyến |
@@ -172,9 +172,9 @@ AC04: Không huỷ được khi đã bắt đầu chuyến.
 
 User Story: Là tài xế, tôi muốn huỷ chuyến khi khách không đến và được bù để không mất công chờ.
 
-AC01: Sau 10 phút chờ, tài xế có nút "Khách không đến"; khách bị tính phí huỷ và được báo.
+AC01: Sau 10 phút chờ tính phí, tài xế có nút "Khách không đến"; khách bị tính phí huỷ, phí chờ và được báo.
 
-AC02: Tài xế huỷ vì lý do khác trước khi đón (TN02) → khách không bị phí.
+AC02: Tài xế huỷ vì lý do khác trước khi bắt đầu chuyến, kể cả khi đã đến điểm đón (TN02) → khách không bị phí, hệ thống tìm tài xế khác.
 
 ### UC3. Đánh giá
 
@@ -228,7 +228,9 @@ AC02: Gửi xong có mã yêu cầu và thời gian phản hồi dự kiến.
 
 ## 10. Câu hỏi mở
 
-- Phí huỷ tiền mặt có giới hạn số chuyến cộng dồn không?
-- Có cho khách sửa đánh giá sau khi gửi?
-- Ngưỡng lộ trình dài hơn 20% có hợp lý không?
-- Tip có áp dụng cho tiền mặt (khách đưa thêm, tài xế ghi nhận) không?
+> Mọi câu hỏi dưới đây đã được PO chốt ngày 13/11/2026; quyết định ghi sau mỗi câu và đã cập nhật vào SRS.
+
+- Phí huỷ tiền mặt có giới hạn số chuyến cộng dồn không? → **Đã chốt:** Giới hạn theo số tiền, không theo số chuyến: nợ > 50.000 ₫ phải trả trước khi đặt chuyến mới (SRS BR-38).
+- Có cho khách sửa đánh giá sau khi gửi? → **Đã chốt:** Không. Mỗi bên đánh giá 1 lần (SRS BR-40).
+- Ngưỡng lộ trình dài hơn 20% có hợp lý không? → **Đã chốt:** Giữ 20% (SRS BR-33).
+- Tip có áp dụng cho tiền mặt (khách đưa thêm, tài xế ghi nhận) không? → **Đã chốt:** Không. Tip chỉ qua ví (SRS BR-39).

@@ -38,8 +38,9 @@
 | BR-16 | **Nhận chuyến**: máy chủ kiểm tra chuyến còn `DANG_TIM_TAI_XE` và yêu cầu còn hạn; đúng → gán tài xế, chuyến `TAI_XE_DANG_DEN`, tài xế `DANG_CHAY`. Sai → MSG-14 cho tài xế |
 | BR-17 | **Thời gian tìm tối đa** 3 phút; hết giờ → chuyến `KHONG_TIM_DUOC`, không thu phí |
 | BR-18 | **Thu nhập dự kiến** trên thẻ = giá chốt × (1 − tỉ lệ chiết khấu); tỉ lệ theo loại xe `[giả định]` |
-| BR-19 | **Tài xế huỷ sau khi nhận** (trước khi đón khách): chuyến quay về `DANG_TIM_TAI_XE`, giữ nguyên giá chốt, đồng hồ 3 phút tính lại từ đầu; tài xế vừa huỷ bị loại khỏi chuyến này. Mỗi chuyến tìm lại tối đa 2 lần; tài xế thứ 3 huỷ → chuyến `KHONG_TIM_DUOC`, không thu phí |
+| BR-19 | **Tài xế huỷ sau khi nhận** (trước khi bắt đầu chuyến, tức ở `TAI_XE_DANG_DEN`, `TAI_XE_DA_DEN`, hoặc `DANG_CHO_KHACH` khi chưa hết 10 phút chờ tính phí): chuyến quay về `DANG_TIM_TAI_XE`, khách không mất phí huỷ, phí chờ đã phát sinh (nếu có) bị xoá, giữ nguyên giá chốt, đồng hồ 3 phút tính lại từ đầu; tài xế vừa huỷ bị loại khỏi chuyến này. Mỗi chuyến tìm lại tối đa 2 lần; tài xế thứ 3 huỷ → chuyến `KHONG_TIM_DUOC`, không thu phí |
 | BR-20 | **Tắt nhận chuyến** khi đang xem yêu cầu → tính là bỏ qua. Mất kết nối > 30 giây khi rảnh → tạm không được gửi yêu cầu |
+| BR-46 | **Bỏ qua nhiều lần**: tài xế bỏ qua hoặc để hết giờ **3 yêu cầu liên tiếp** → tự chuyển sang Tắt nhận chuyến, hiện MSG-39; tài xế bật lại thủ công được ngay. Bộ đếm về 0 khi nhận một chuyến `[giả định]` |
 
 ## 4. Trạng thái
 
@@ -189,7 +190,7 @@ flowchart TD
 
 | **Mục** | **Nội dung** |
 | --- | --- |
-| Tiền điều kiện | Chuyến `TAI_XE_DANG_DEN`, chưa đón khách |
+| Tiền điều kiện | Chuyến `TAI_XE_DANG_DEN`, `TAI_XE_DA_DEN`, hoặc `DANG_CHO_KHACH` chưa hết 10 phút chờ tính phí; chưa bắt đầu chuyến. Hết 10 phút chờ tính phí thì tài xế dùng "Khách không đến" (SRS TN04, BR-37) |
 | Hậu điều kiện | Chuyến quay về `DANG_TIM_TAI_XE`; khách được tìm tài xế mới |
 
 ```mermaid
@@ -209,7 +210,7 @@ flowchart TD
 | 1 | Tài xế | Ở **SCR-T03**, bấm Huỷ chuyến |
 | 2 | Tài xế | Chọn lý do huỷ |
 | 3 | Hệ thống | Gọi \[TripDriverCancel\]; ghi nhận lượt huỷ cho tài xế, tài xế về `DANG_RANH` |
-| 4 | Hệ thống | Chuyến về `DANG_TIM_TAI_XE`, giữ giá chốt (BR-19) |
+| 4 | Hệ thống | Chuyến về `DANG_TIM_TAI_XE`, giữ giá chốt, xoá phí chờ đã phát sinh (BR-19) |
 | 5 | Hệ thống | Khách nhận MSG-17 |
 | 6 | Hệ thống | Chạy lại UC-04, loại tài xế vừa huỷ |
 
@@ -257,7 +258,7 @@ flowchart TD
 | 2 | Thu nhập dự kiến | Số lớn | BR-18 |
 | 3 | Tới điểm đón | Text | "{km} km · {phút} phút" |
 | 4 | Điểm đón | Text | Tên điểm, ghi chú của khách |
-| 5 | Điểm đến | Text | Tên điểm, "{km} km chuyến đi" |
+| 5 | Quãng đường chuyến | Text | Chỉ "{km} km chuyến đi" và hướng đi (ví dụ "Về phía Quận 1"); **không hiện tên điểm đến** trước khi nhận. Nhận xong mới hiện điểm đến ở **SCR-T03** |
 | 6 | Thông tin khách | Text phụ | Đánh giá của khách, phương thức thanh toán |
 | 7 | Nút "Nhận" | Button lớn | Chiếm phần lớn chiều rộng; loading khi đang gửi |
 | 8 | Nút "Bỏ qua" | Button phụ | |
@@ -269,7 +270,7 @@ flowchart TD
 | --- | --- | --- | --- |
 | \[DriverStatusSet\] | driver_id, status | status hiện tại | 5s / 2 lần |
 | \[DriverLocationPush\] | driver_id, lat, lng, heading, accuracy | – | Mỗi 5 giây khi `DANG_RANH`, `DANG_CHAY` |
-| \[DispatchOffer\] (máy chủ → tài xế) | offer_id, trip_id, thông tin chuyến, expires_at | – | Qua kết nối realtime; dự phòng thông báo đẩy |
+| \[DispatchOffer\] (máy chủ → tài xế) | offer_id, trip_id, thông tin chuyến (không gồm điểm đến, chỉ km và hướng đi), expires_at | – | Qua kết nối realtime; dự phòng thông báo đẩy |
 | \[OfferRespond\] | offer_id, action (ACCEPT, DECLINE) | accepted, trip | 5s / không tự retry; hỏi \[TripGet\] khi không rõ |
 | \[TripEvent\] (máy chủ → khách) | trip_id, status, driver | – | Qua kết nối realtime; dự phòng thông báo đẩy |
 | \[TripGet\] | trip_id | Trạng thái và thông tin đầy đủ của chuyến | 5s / 2 lần |
@@ -318,6 +319,7 @@ sequenceDiagram
 | MSG-14 | Toast (tài xế) | Chuyến này không còn |
 | MSG-15 | Popup (tài xế) | Cần bật vị trí "Luôn cho phép" để nhận chuyến. \[Mở Cài đặt\] |
 | MSG-16 | Toast (tài xế) | Chưa kết nối được, vui lòng kiểm tra mạng |
+| MSG-39 | Popup (tài xế) | Bạn đã bỏ qua 3 chuyến liên tiếp nên đã được chuyển sang Tạm nghỉ. Bật lại khi sẵn sàng nhận chuyến. \[Bật nhận chuyến\] |
 
 MSG-17 thuộc SRS TN03. Bản EN: `[chờ bổ sung]`.
 

@@ -27,10 +27,12 @@ stateDiagram-v2
   TAI_XE_DANG_DEN --> DANG_TIM_TAI_XE : Tài xế huỷ, tìm tài xế khác, TN02
   TAI_XE_DANG_DEN --> DA_HUY : Khách huỷ, TN04
   TAI_XE_DA_DEN --> DA_HUY : Khách huỷ, TN04
+  TAI_XE_DA_DEN --> DANG_TIM_TAI_XE : Tài xế huỷ, tìm tài xế khác, TN02
   TAI_XE_DA_DEN --> DANG_CHO_KHACH : Hết thời gian chờ miễn phí, TN03
   DANG_CHO_KHACH --> DANG_DI : Tài xế bấm Bắt đầu
   TAI_XE_DA_DEN --> DANG_DI : Tài xế bấm Bắt đầu, TN03
   DANG_CHO_KHACH --> DA_HUY : Khách huỷ hoặc khách không đến, TN04
+  DANG_CHO_KHACH --> DANG_TIM_TAI_XE : Tài xế huỷ trước khi hết 10 phút chờ tính phí, TN02
   DANG_DI --> CHO_THANH_TOAN : Tài xế bấm Kết thúc, TN03
   CHO_THANH_TOAN --> HOAN_THANH : Đã thanh toán, TN04
   KHONG_TIM_DUOC --> [*]
@@ -84,7 +86,7 @@ Ngoài phạm vi cả đề: đăng ký và duyệt hồ sơ tài xế, đặt x
 
 - Màn của App khách có mã `SCR-K..`, App tài xế có mã `SCR-T..`.
 - Tiền tệ VND; giá làm tròn tới 1.000 ₫.
-- Mã BR, MSG, UC đánh số liên tục trong cả đề: TN01 dùng BR-01–10, MSG-01–09; TN02 dùng BR-11–20, MSG-10–16; TN03 dùng BR-21–31, MSG-17–26; TN04 dùng BR-32–43, MSG-27–38.
+- Mã BR, MSG, UC đánh số liên tục trong cả đề: TN01 dùng BR-01–10, MSG-01–09; TN02 dùng BR-11–20, MSG-10–16; TN03 dùng BR-21–31, MSG-17–26; TN04 dùng BR-32–43, MSG-27–38. Mã bổ sung sau đánh tiếp từ số cuối: BR-44 (điểm đón chuẩn), BR-45 (xe gần trên bản đồ) ở SRS TN01; BR-46 (tạm tắt khi bỏ qua nhiều), MSG-39 ở SRS TN02.
 - Đăng nhập bằng số điện thoại và OTP theo luồng chuẩn, không mô tả trong bộ tài liệu này.
 - Giá trị đánh dấu `[giả định]` dùng để dựng flow, cần PO hoặc BA xác nhận trước khi dùng.
 

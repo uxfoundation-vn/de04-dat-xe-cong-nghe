@@ -208,7 +208,9 @@ AC02: Hai phía chuyển sang màn thanh toán (TN04).
 
 ## 10. Câu hỏi mở
 
-- Mã xác nhận có áp dụng cho mọi chuyến, không chỉ ban đêm?
-- Phí chờ có áp dụng cho xe máy không?
-- Đội an toàn hoạt động 24/7 hay theo khung giờ?
-- Có phát hiện xe dừng lâu bất thường ngay ở MVP?
+> Mọi câu hỏi dưới đây đã được PO chốt ngày 13/11/2026; quyết định ghi sau mỗi câu và đã cập nhật vào SRS.
+
+- Mã xác nhận có áp dụng cho mọi chuyến, không chỉ ban đêm? → **Đã chốt:** Không. Chỉ chuyến có giờ đón 22:00–05:00 (SRS BR-26).
+- Phí chờ có áp dụng cho xe máy không? → **Đã chốt:** Có, sau 3 phút chờ miễn phí (SRS BR-25).
+- Đội an toàn hoạt động 24/7 hay theo khung giờ? → **Đã chốt:** Trực 24/7.
+- Có phát hiện xe dừng lâu bất thường ngay ở MVP? → **Đã chốt:** Không ở MVP.

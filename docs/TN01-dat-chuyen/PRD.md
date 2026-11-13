@@ -200,7 +200,9 @@ AC02: Sửa, xoá địa điểm đã lưu trong Hồ sơ.
 
 ## 10. Câu hỏi mở
 
-- Có cho đặt khi điểm đón ngoài vùng nhưng điểm đến trong vùng?
-- Hệ số cao điểm tối đa là bao nhiêu, ai quyết định?
-- Có gợi ý điểm đón chuẩn (cổng chính, sảnh) cho toà nhà lớn?
-- Giá ước tính có hiển thị dạng khoảng (từ–đến) thay vì một con số?
+> Mọi câu hỏi dưới đây đã được PO chốt ngày 13/11/2026; quyết định ghi sau mỗi câu và đã cập nhật vào SRS.
+
+- Có cho đặt khi điểm đón ngoài vùng nhưng điểm đến trong vùng? → **Đã chốt:** Không. Cả điểm đón và điểm đến phải trong vùng phục vụ (SRS BR-02).
+- Hệ số cao điểm tối đa là bao nhiêu, ai quyết định? → **Đã chốt:** Hệ thống tự tính từ dữ liệu giao thông Google Maps, trần ×2,0 (SRS BR-07).
+- Có gợi ý điểm đón chuẩn (cổng chính, sảnh) cho toà nhà lớn? → **Đã chốt:** Có, tối đa 3 điểm chuẩn (SRS BR-44).
+- Giá ước tính có hiển thị dạng khoảng (từ–đến) thay vì một con số? → **Đã chốt:** Không. Hiện một con số (SRS BR-05).
