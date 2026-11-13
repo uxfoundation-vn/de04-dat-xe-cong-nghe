@@ -1,8 +1,8 @@
-> **Mã:** DE04-TN01-SRS · **Trạng thái:** nháp · **Người viết:** Design (mock) · **PRD:** [PRD.md](PRD.md)
+> **Mã:** DE04-TN01-SRS · **Trạng thái:** đã chốt · **Người viết:** Design · **PRD:** [PRD.md](PRD.md)
 
 # UC-DE04-01 - Đặt chuyến
 
-> **Bản mock.** Giá trị `[giả định]` cần BA xác nhận. SRS này mô tả từ lúc mở app đến khi chuyến được tạo ở trạng thái `DANG_TIM_TAI_XE`; ghép tài xế xem [SRS TN02](../TN02-ghep-tai-xe-nhan-chuyen/SRS.md).
+> SRS này mô tả từ lúc mở app đến khi chuyến được tạo ở trạng thái `DANG_TIM_TAI_XE`; ghép tài xế xem [SRS TN02](../TN02-ghep-tai-xe-nhan-chuyen/SRS.md).
 
 ## 1. Tổng quan
 
@@ -12,7 +12,7 @@
 | Actor | Khách · App khách · Máy chủ · Dịch vụ bản đồ |
 | Phạm vi | Định vị, chọn điểm đón và điểm đến, địa điểm đã lưu, loại xe, giá ước tính, cao điểm, xác nhận đặt |
 | Ngoài phạm vi | Hẹn giờ, nhiều điểm dừng, đặt hộ, mã giảm giá |
-| Nền tảng | App khách iOS / Android `[giả định]` |
+| Nền tảng | App khách iOS / Android |
 
 ## 2. User Story
 
@@ -28,17 +28,17 @@
 
 | **Mã** | **Quy tắc** |
 | --- | --- |
-| BR-01 | **Điểm đón mặc định** = vị trí thiết bị, khớp vào điểm đường gần nhất mà xe dừng được. Độ chính xác định vị > 50 m → hiện MSG-02 `[giả định]` |
+| BR-01 | **Điểm đón mặc định** = vị trí thiết bị, khớp vào điểm đường gần nhất mà xe dừng được. Độ chính xác định vị > 50 m → hiện MSG-02 |
 | BR-02 | **Vùng phục vụ**: điểm đón và điểm đến phải nằm trong vùng phục vụ của thành phố; ngoài vùng → MSG-03, không cho sang bước chọn loại xe |
-| BR-03 | **Khoảng cách** điểm đón tới điểm đến từ 300 m đến 100 km theo đường đi `[giả định]` |
+| BR-03 | **Khoảng cách** điểm đón tới điểm đến từ 300 m đến 100 km theo đường đi |
 | BR-04 | **Gợi ý điểm đến**: khi mở ô tìm hiện Nhà, Công ty, địa điểm đã lưu, 5 điểm đến gần nhất; khi gõ ≥ 2 ký tự gọi tìm địa chỉ, chấp nhận không dấu, chờ 300 ms sau lần gõ cuối |
-| BR-05 | **Giá ước tính** = max(giá tối thiểu, giá mở cửa + đơn giá km × km + đơn giá phút × phút) × hệ số cao điểm, làm tròn lên 1.000 ₫. Đơn giá theo loại xe và thành phố `[giả định]` |
+| BR-05 | **Giá ước tính** = max(giá tối thiểu, giá mở cửa + đơn giá km × km + đơn giá phút × phút) × hệ số cao điểm, làm tròn lên 1.000 ₫. Đơn giá theo loại xe và thành phố |
 | BR-06 | **Hiệu lực giá** 5 phút kể từ lúc tính (quote_id). Quá hạn khi bấm Đặt → tính lại; giá mới khác giá cũ → MSG-05 trước khi tạo chuyến |
-| BR-07 | **Cao điểm**: hệ số do hệ thống tự tính từ **dữ liệu giao thông Google Maps** trả về cho lộ trình: hệ số = thời gian đi có giao thông / thời gian đi bình thường, làm tròn 0,1; < 1,2 coi là 1,0; trần ×2,0 `[giả định]`; không ai chỉnh tay. Hệ số > 1,0 thì nhãn "Cao điểm ×{hệ số}"; lần đầu mỗi phiên phải đồng ý (MSG-04). Giá sau khi khách đã đặt không đổi vì cao điểm |
-| BR-08 | **Loại xe không khả dụng** khi không có tài xế đang rảnh trong bán kính 5 km `[giả định]`; hiện "Không có xe gần bạn", disabled |
+| BR-07 | **Cao điểm**: hệ số do hệ thống tự tính từ **dữ liệu giao thông Google Maps** trả về cho lộ trình: hệ số = thời gian đi có giao thông / thời gian đi bình thường, làm tròn 0,1; < 1,2 coi là 1,0; trần ×2,0; không ai chỉnh tay. Hệ số > 1,0 thì nhãn "Cao điểm ×{hệ số}"; lần đầu mỗi phiên phải đồng ý (MSG-04). Giá sau khi khách đã đặt không đổi vì cao điểm |
+| BR-08 | **Loại xe không khả dụng** khi không có tài xế đang rảnh trong bán kính 5 km; hiện "Không có xe gần bạn", disabled |
 | BR-09 | **Tạo chuyến** dùng idempotency key cho mỗi lần xác nhận; bấm nhiều lần chỉ tạo 1 chuyến. Khách đang có chuyến chưa kết thúc thì không đặt thêm được (MSG-07) |
-| BR-44 | **Điểm đón chuẩn**: điểm đón rơi vào khu vực lớn (toà nhà, trung tâm thương mại, bệnh viện, sân bay) có khai báo điểm đón chuẩn (cổng, sảnh) → **SCR-K01** hiện tối đa 3 điểm chuẩn gần nhất, chọn sẵn điểm gần nhất; khách chạm để đổi hoặc vẫn giữ ghim tự do. Dữ liệu điểm chuẩn do vận hành khai báo `[giả định]` |
-| BR-45 | **Xe gần bạn**: **SCR-K01** hiện tối đa 10 tài xế `DANG_RANH` trong bán kính 3 km, đúng loại xe đang chọn (mặc định loại phổ biến nhất); vị trí làm lệch ngẫu nhiên ~50 m, cập nhật mỗi 10 giây; không hiện tên, biển số `[giả định]` |
+| BR-44 | **Điểm đón chuẩn**: điểm đón rơi vào khu vực lớn (toà nhà, trung tâm thương mại, bệnh viện, sân bay) có khai báo điểm đón chuẩn (cổng, sảnh) → **SCR-K01** hiện tối đa 3 điểm chuẩn gần nhất, chọn sẵn điểm gần nhất; khách chạm để đổi hoặc vẫn giữ ghim tự do. Dữ liệu điểm chuẩn do vận hành khai báo |
+| BR-45 | **Xe gần bạn**: **SCR-K01** hiện tối đa 10 tài xế `DANG_RANH` trong bán kính 3 km, đúng loại xe đang chọn (mặc định loại phổ biến nhất); vị trí làm lệch ngẫu nhiên ~50 m, cập nhật mỗi 10 giây; không hiện tên, biển số |
 | BR-10 | **Ghi chú cho tài xế** tối đa 100 ký tự. **Địa điểm đã lưu**: Nhà, Công ty và tối đa 10 địa điểm khác, tên 1–30 ký tự |
 
 ## 4. Trạng thái
@@ -242,7 +242,7 @@ flowchart TD
 
 ## 8. API
 
-| **API** | **Request chính** | **Response chính** | **Timeout / retry** `[giả định]` |
+| **API** | **Request chính** | **Response chính** | **Timeout / retry** |
 | --- | --- | --- | --- |
 | \[ReverseGeocode\] | lat, lng | Tên điểm, địa chỉ, điểm đường đã khớp | 3s / 1 lần |
 | \[PlaceSearch\] | keyword, vị trí hiện tại | Danh sách gợi ý | 3s / không retry |
@@ -307,7 +307,7 @@ sequenceDiagram
 
 ## 10. Yêu cầu phi chức năng
 
-| **Mục** | **Yêu cầu** `[giả định]` |
+| **Mục** | **Yêu cầu** |
 | --- | --- |
 | Hiệu năng | Định vị và hiện tên điểm đón ≤ 3 giây; \[FareQuote\] ≤ 2 giây (p95); gợi ý địa chỉ ≤ 1 giây |
 | Độ chính xác | Giá cuối lệch giá ước tính ≤ 10% khi đi đúng lộ trình đề xuất |

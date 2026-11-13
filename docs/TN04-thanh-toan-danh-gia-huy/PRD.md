@@ -1,8 +1,6 @@
-> **Mã:** DE04-TN04-PRD · **Trạng thái:** nháp · **Người viết:** Design (mock) · **SRS:** [SRS.md](SRS.md)
+> **Mã:** DE04-TN04-PRD · **Trạng thái:** đã chốt · **Người viết:** Design · **SRS:** [SRS.md](SRS.md)
 
 # PRD Thanh toán, đánh giá và huỷ chuyến (App đặt xe công nghệ)
-
-> **Bản mock.** Con số đánh dấu `[giả định]` dùng để dựng flow, cần PO xác nhận trước khi dùng.
 
 ## 1. Bối cảnh và vấn đề
 
@@ -23,9 +21,9 @@ Tính năng này lo hai lối ra của vòng đời chuyến đi (xem [README](.
 
 ### 1.3 Mục tiêu
 
-- ≥ 98% chuyến hoàn thành được thanh toán ngay khi kết thúc `[giả định]`.
-- Tỉ lệ khiếu nại về giá ≤ 1% chuyến `[giả định]`.
-- ≥ 50% chuyến được khách đánh giá `[giả định]`.
+- ≥ 98% chuyến hoàn thành được thanh toán ngay khi kết thúc.
+- Tỉ lệ khiếu nại về giá ≤ 1% chuyến.
+- ≥ 50% chuyến được khách đánh giá.
 
 ## 2. Người dùng
 
@@ -76,7 +74,7 @@ Hai bên đánh giá độc lập, không thấy điểm của nhau trước khi
 
 ## 5. Quy tắc nghiệp vụ
 
-| **Quy tắc** | **Giá trị** `[giả định]` |
+| **Quy tắc** | **Giá trị** |
 | --- | --- |
 | Giá cuối | Giá chốt + phí chờ; lộ trình thực tế dài hơn đề xuất > 20% thì tính lại theo thực tế, ngắn hơn thì giữ giá chốt. Riêng chuyến dừng giữa đường do phía tài xế thì tính theo thực tế, không vượt giá chốt |
 | Huỷ miễn phí | Khi đang tìm tài xế; trong 2 phút đầu sau khi có tài xế; khi tài xế đến trễ > 5 phút so với dự kiến |
@@ -204,7 +202,7 @@ AC01: Từ chi tiết chuyến trong 7 ngày, chọn loại sự cố (sai giá,
 
 AC02: Gửi xong có mã yêu cầu và thời gian phản hồi dự kiến.
 
-## 8. Chỉ số theo dõi `[giả định]`
+## 8. Chỉ số theo dõi
 
 | **Chỉ số** | **Định nghĩa** | **Mục tiêu MVP** |
 | --- | --- | --- |

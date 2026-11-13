@@ -1,8 +1,8 @@
-> **Mã:** DE04-TN02-SRS · **Trạng thái:** nháp · **Người viết:** Design (mock) · **PRD:** [PRD.md](PRD.md)
+> **Mã:** DE04-TN02-SRS · **Trạng thái:** đã chốt · **Người viết:** Design · **PRD:** [PRD.md](PRD.md)
 
 # UC-DE04-02 - Ghép tài xế và nhận chuyến
 
-> **Bản mock.** Giá trị `[giả định]` cần BA xác nhận. SRS này mô tả chuyến từ `DANG_TIM_TAI_XE` tới `TAI_XE_DANG_DEN` hoặc `KHONG_TIM_DUOC`; theo dõi chuyến xem [SRS TN03](../TN03-theo-doi-chuyen-an-toan/SRS.md); huỷ và phí huỷ xem [SRS TN04](../TN04-thanh-toan-danh-gia-huy/SRS.md).
+> SRS này mô tả chuyến từ `DANG_TIM_TAI_XE` tới `TAI_XE_DANG_DEN` hoặc `KHONG_TIM_DUOC`; theo dõi chuyến xem [SRS TN03](../TN03-theo-doi-chuyen-an-toan/SRS.md); huỷ và phí huỷ xem [SRS TN04](../TN04-thanh-toan-danh-gia-huy/SRS.md).
 
 ## 1. Tổng quan
 
@@ -12,7 +12,7 @@
 | Actor | Khách · Tài xế · App khách · App tài xế · Máy chủ điều phối |
 | Phạm vi | Bật, tắt nhận chuyến; thuật toán gửi lần lượt; thẻ yêu cầu; màn chờ của khách; không tìm được tài xế; tài xế huỷ sau khi nhận |
 | Ngoài phạm vi | Danh sách chuyến chờ, ghép nối tiếp, tài xế yêu thích |
-| Nền tảng | App khách, App tài xế iOS / Android `[giả định]` |
+| Nền tảng | App khách, App tài xế iOS / Android |
 
 ## 2. User Story
 
@@ -29,17 +29,17 @@
 
 | **Mã** | **Quy tắc** |
 | --- | --- |
-| BR-11 | **Tài xế đủ điều kiện**: trạng thái `DANG_RANH`, đúng loại xe, vị trí cập nhật trong 30 giây gần nhất, trong bán kính tìm, chưa bỏ qua chuyến này `[giả định]` |
+| BR-11 | **Tài xế đủ điều kiện**: trạng thái `DANG_RANH`, đúng loại xe, vị trí cập nhật trong 30 giây gần nhất, trong bán kính tìm, chưa bỏ qua chuyến này |
 | BR-12 | **Bán kính tìm** bắt đầu 2 km, +1 km mỗi 30 giây, tối đa 5 km |
 | BR-13 | **Thứ tự gửi**: tài xế có thời gian đi tới điểm đón ngắn nhất trước; bằng nhau thì ưu tiên tài xế chờ lâu nhất kể từ chuyến trước |
 | BR-14 | **Gửi lần lượt**: mỗi yêu cầu chỉ gửi cho 1 tài xế; tài xế đó chuyển `DANG_XEM_YEU_CAU` và không nhận yêu cầu khác cho tới khi trả lời |
 | BR-15 | **Thời gian trả lời** 15 giây tính trên máy chủ; app hiện đếm ngược theo thời điểm hết hạn máy chủ gửi về. Hết giờ hoặc Bỏ qua → gửi tài xế kế tiếp |
 | BR-16 | **Nhận chuyến**: máy chủ kiểm tra chuyến còn `DANG_TIM_TAI_XE` và yêu cầu còn hạn; đúng → gán tài xế, chuyến `TAI_XE_DANG_DEN`, tài xế `DANG_CHAY`. Sai → MSG-14 cho tài xế |
 | BR-17 | **Thời gian tìm tối đa** 3 phút; hết giờ → chuyến `KHONG_TIM_DUOC`, không thu phí |
-| BR-18 | **Thu nhập dự kiến** trên thẻ = giá chốt × (1 − tỉ lệ chiết khấu); tỉ lệ theo loại xe `[giả định]` |
+| BR-18 | **Thu nhập dự kiến** trên thẻ = giá chốt × (1 − tỉ lệ chiết khấu); tỉ lệ theo loại xe |
 | BR-19 | **Tài xế huỷ sau khi nhận** (trước khi bắt đầu chuyến, tức ở `TAI_XE_DANG_DEN`, `TAI_XE_DA_DEN`, hoặc `DANG_CHO_KHACH` khi chưa hết 10 phút chờ tính phí): chuyến quay về `DANG_TIM_TAI_XE`, khách không mất phí huỷ, phí chờ đã phát sinh (nếu có) bị xoá, giữ nguyên giá chốt, đồng hồ 3 phút tính lại từ đầu; tài xế vừa huỷ bị loại khỏi chuyến này. Mỗi chuyến tìm lại tối đa 2 lần; tài xế thứ 3 huỷ → chuyến `KHONG_TIM_DUOC`, không thu phí |
 | BR-20 | **Tắt nhận chuyến** khi đang xem yêu cầu → tính là bỏ qua. Mất kết nối > 30 giây khi rảnh → tạm không được gửi yêu cầu |
-| BR-46 | **Bỏ qua nhiều lần**: tài xế bỏ qua hoặc để hết giờ **3 yêu cầu liên tiếp** → tự chuyển sang Tắt nhận chuyến, hiện MSG-39; tài xế bật lại thủ công được ngay. Bộ đếm về 0 khi nhận một chuyến `[giả định]` |
+| BR-46 | **Bỏ qua nhiều lần**: tài xế bỏ qua hoặc để hết giờ **3 yêu cầu liên tiếp** → tự chuyển sang Tắt nhận chuyến, hiện MSG-39; tài xế bật lại thủ công được ngay. Bộ đếm về 0 khi nhận một chuyến |
 
 ## 4. Trạng thái
 
@@ -265,7 +265,7 @@ flowchart TD
 
 ## 8. API
 
-| **API** | **Request chính** | **Response chính** | **Timeout / retry** `[giả định]` |
+| **API** | **Request chính** | **Response chính** | **Timeout / retry** |
 | --- | --- | --- | --- |
 | \[DriverStatusSet\] | driver_id, status | status hiện tại | 5s / 2 lần |
 | \[DriverLocationPush\] | driver_id, lat, lng, heading, accuracy | – | Mỗi 5 giây khi `DANG_RANH`, `DANG_CHAY` |
@@ -324,7 +324,7 @@ MSG-17 thuộc SRS TN03.
 
 ## 10. Yêu cầu phi chức năng
 
-| **Mục** | **Yêu cầu** `[giả định]` |
+| **Mục** | **Yêu cầu** |
 | --- | --- |
 | Hiệu năng | Yêu cầu hiện trên App tài xế ≤ 2 giây sau khi máy chủ gửi; cập nhật ghép xong tới App khách ≤ 2 giây |
 | Nhất quán | Máy chủ là nguồn đúng về trạng thái; một chuyến chỉ có một tài xế; app không tự kết luận khi chưa có phản hồi |

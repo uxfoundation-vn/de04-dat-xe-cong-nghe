@@ -1,6 +1,6 @@
 # Đề 4 · Đặt xe công nghệ
 
-> **Mã:** DE04 · **Độ khó:** 4/8 · **Vai trò:** 2 (khách, tài xế) · **Nền tảng:** App khách và App tài xế iOS / Android `[giả định]`
+> **Mã:** DE04 · **Độ khó:** 4/8 · **Vai trò:** 2 (khách, tài xế) · **Nền tảng:** App khách và App tài xế iOS / Android
 
 Khách đặt xe máy hoặc ô tô, thấy giá trước khi đặt, theo dõi tài xế trên bản đồ và thanh toán khi kết thúc chuyến. Tài xế nhận yêu cầu, đón khách, hoàn thành chuyến. Đây là đề đầu tiên có **hai phía dùng chung một dữ liệu theo thời gian thực**. Đề gồm 4 tính năng; mỗi tính năng có 1 PRD và 1 SRS riêng.
 
@@ -88,7 +88,6 @@ Ngoài phạm vi cả đề: đăng ký và duyệt hồ sơ tài xế, đặt x
 - Tiền tệ VND; giá làm tròn tới 1.000 ₫.
 - Mã BR, MSG, UC đánh số liên tục trong cả đề: TN01 dùng BR-01–10, MSG-01–09; TN02 dùng BR-11–20, MSG-10–16; TN03 dùng BR-21–31, MSG-17–26; TN04 dùng BR-32–43, MSG-27–38. Mã bổ sung sau đánh tiếp từ số cuối: BR-44 (điểm đón chuẩn), BR-45 (xe gần trên bản đồ) ở SRS TN01; BR-46 (tạm tắt khi bỏ qua nhiều), MSG-39 ở SRS TN02.
 - Đăng nhập bằng số điện thoại và OTP theo luồng chuẩn, không mô tả trong bộ tài liệu này.
-- Giá trị đánh dấu `[giả định]` dùng để dựng flow, cần PO hoặc BA xác nhận trước khi dùng.
 
 ## Danh sách màn hình
 
