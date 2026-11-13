@@ -212,5 +212,5 @@ AC02: Hai phía chuyển sang màn thanh toán (TN04).
 
 - Mã xác nhận có áp dụng cho mọi chuyến, không chỉ ban đêm?
 - Phí chờ có áp dụng cho xe máy không?
-- Đội an toàn hoạt động 24/7 hay theo khung giờ?
+- Đội an toàn hoạt động 24/7 hay theo khung giờ? → **Đã chốt:** Trực 24/7.
 - Có phát hiện xe dừng lâu bất thường ngay ở MVP?

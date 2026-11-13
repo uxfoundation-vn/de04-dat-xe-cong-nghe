@@ -39,7 +39,7 @@
 | BR-27 | **Kết thúc chuyến**: tài xế bấm; nếu cách điểm đến > 500 m → hỏi xác nhận và ghi lý do. Chuyến sang `CHO_THANH_TOAN`; giá cuối tính theo SRS TN04 |
 | BR-28 | **Kênh liên lạc**: gọi qua số trung gian gán cho cặp khách – tài xế; có hiệu lực từ khi nhận chuyến tới 30 phút sau khi kết thúc. Nhắn tin trong app, tối đa 200 ký tự mỗi tin |
 | BR-29 | **Link chia sẻ hành trình**: token ngẫu nhiên, không chứa số điện thoại, tên đầy đủ của khách; hết hạn khi chuyến kết thúc hoặc huỷ |
-| BR-30 | **SOS**: Gọi 113 cần giữ nút 2 giây; Gửi vị trí gửi SMS tới tối đa 3 liên hệ khẩn cấp kèm link hành trình; Báo đội an toàn tạo ticket ưu tiên cao kèm vị trí, chuyến |
+| BR-30 | **SOS** (đội an toàn trực **24/7**): Gọi 113 cần giữ nút 2 giây; Gửi vị trí gửi SMS tới tối đa 3 liên hệ khẩn cấp kèm link hành trình; Báo đội an toàn tạo ticket ưu tiên cao kèm vị trí, chuyến |
 | BR-31 | **Nút an toàn** hiện ở **SCR-K05** từ `TAI_XE_DANG_DEN` tới `CHO_THANH_TOAN` |
 
 ## 4. Trạng thái

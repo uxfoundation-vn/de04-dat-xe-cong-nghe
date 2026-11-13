@@ -86,7 +86,7 @@ Ngoài phạm vi cả đề: đăng ký và duyệt hồ sơ tài xế, đặt x
 
 - Màn của App khách có mã `SCR-K..`, App tài xế có mã `SCR-T..`.
 - Tiền tệ VND; giá làm tròn tới 1.000 ₫.
-- Mã BR, MSG, UC đánh số liên tục trong cả đề: TN01 dùng BR-01–10, MSG-01–09; TN02 dùng BR-11–20, MSG-10–16; TN03 dùng BR-21–31, MSG-17–26; TN04 dùng BR-32–43, MSG-27–38.
+- Mã BR, MSG, UC đánh số liên tục trong cả đề: TN01 dùng BR-01–10, MSG-01–09; TN02 dùng BR-11–20, MSG-10–16; TN03 dùng BR-21–31, MSG-17–26; TN04 dùng BR-32–43, MSG-27–38. Mã bổ sung sau đánh tiếp từ số cuối: BR-44 (điểm đón chuẩn), BR-45 (xe gần trên bản đồ) ở SRS TN01; BR-46 (tạm tắt khi bỏ qua nhiều), MSG-39 ở SRS TN02.
 - Đăng nhập bằng số điện thoại và OTP theo luồng chuẩn, không mô tả trong bộ tài liệu này.
 - Giá trị đánh dấu `[giả định]` dùng để dựng flow, cần PO hoặc BA xác nhận trước khi dùng.
 

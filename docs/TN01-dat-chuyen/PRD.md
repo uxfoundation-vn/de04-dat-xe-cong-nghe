@@ -203,6 +203,6 @@ AC02: Sửa, xoá địa điểm đã lưu trong Hồ sơ.
 > Câu nào đã có giá trị ở mục 5 thì giá trị đó là **tạm chốt** `[giả định]` để dựng flow. Câu hỏi vẫn để mở cho đến khi PO xác nhận.
 
 - Có cho đặt khi điểm đón ngoài vùng nhưng điểm đến trong vùng?
-- Hệ số cao điểm tối đa là bao nhiêu, ai quyết định?
-- Có gợi ý điểm đón chuẩn (cổng chính, sảnh) cho toà nhà lớn?
-- Giá ước tính có hiển thị dạng khoảng (từ–đến) thay vì một con số?
+- Hệ số cao điểm tối đa là bao nhiêu, ai quyết định? → **Đã chốt:** Hệ thống tự tính từ dữ liệu giao thông Google Maps, trần ×2,0 (SRS BR-07).
+- Có gợi ý điểm đón chuẩn (cổng chính, sảnh) cho toà nhà lớn? → **Đã chốt:** Có, tối đa 3 điểm chuẩn (SRS BR-44).
+- Giá ước tính có hiển thị dạng khoảng (từ–đến) thay vì một con số? → **Đã chốt:** Không. Hiện một con số (SRS BR-05).
