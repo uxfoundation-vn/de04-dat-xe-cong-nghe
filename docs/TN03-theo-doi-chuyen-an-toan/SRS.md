@@ -13,7 +13,6 @@
 | Phạm vi | Vị trí realtime, đã đến, thời gian chờ, mã xác nhận, bắt đầu và kết thúc chuyến, gọi, nhắn tin, chia sẻ hành trình, SOS |
 | Ngoài phạm vi | Ghi âm, phát hiện bất thường tự động, đổi điểm đến giữa chuyến |
 | Nền tảng | App khách, App tài xế iOS / Android; trang xem hành trình trên Web `[giả định]` |
-| Figma | `[chưa có]` |
 
 ## 2. User Story
 
@@ -404,8 +403,6 @@ sequenceDiagram
 | MSG-24 | Toast | Đã gửi vị trí và hành trình tới {n} liên hệ khẩn cấp |
 | MSG-25 | Toast | Đội an toàn đã nhận yêu cầu và sẽ liên hệ bạn ngay |
 | MSG-26 | Trang Web | Chuyến đi đã kết thúc. Đường link này không còn hiệu lực |
-
-Bản EN: `[chờ bổ sung]`.
 
 ## 10. Yêu cầu phi chức năng
 

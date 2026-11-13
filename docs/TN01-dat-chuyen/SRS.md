@@ -13,7 +13,6 @@
 | Phạm vi | Định vị, chọn điểm đón và điểm đến, địa điểm đã lưu, loại xe, giá ước tính, cao điểm, xác nhận đặt |
 | Ngoài phạm vi | Hẹn giờ, nhiều điểm dừng, đặt hộ, mã giảm giá |
 | Nền tảng | App khách iOS / Android `[giả định]` |
-| Figma | `[chưa có]` |
 
 ## 2. User Story
 
@@ -305,8 +304,6 @@ sequenceDiagram
 | MSG-07 | Popup | Bạn đang có một chuyến chưa kết thúc. \[Xem chuyến hiện tại\] |
 | MSG-08 | Toast | Kết nối không ổn định, vui lòng thử lại |
 | MSG-09 | Inline **SCR-K03** | Hiện không có xe gần bạn. Vui lòng thử lại sau ít phút |
-
-Bản EN: `[chờ bổ sung]`.
 
 ## 10. Yêu cầu phi chức năng
 

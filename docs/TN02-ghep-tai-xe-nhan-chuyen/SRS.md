@@ -13,7 +13,6 @@
 | Phạm vi | Bật, tắt nhận chuyến; thuật toán gửi lần lượt; thẻ yêu cầu; màn chờ của khách; không tìm được tài xế; tài xế huỷ sau khi nhận |
 | Ngoài phạm vi | Danh sách chuyến chờ, ghép nối tiếp, tài xế yêu thích |
 | Nền tảng | App khách, App tài xế iOS / Android `[giả định]` |
-| Figma | `[chưa có]` |
 
 ## 2. User Story
 
@@ -321,7 +320,7 @@ sequenceDiagram
 | MSG-16 | Toast (tài xế) | Chưa kết nối được, vui lòng kiểm tra mạng |
 | MSG-39 | Popup (tài xế) | Bạn đã bỏ qua 3 chuyến liên tiếp nên đã được chuyển sang Tạm nghỉ. Bật lại khi sẵn sàng nhận chuyến. \[Bật nhận chuyến\] |
 
-MSG-17 thuộc SRS TN03. Bản EN: `[chờ bổ sung]`.
+MSG-17 thuộc SRS TN03.
 
 ## 10. Yêu cầu phi chức năng
 
